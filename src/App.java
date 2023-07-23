@@ -102,6 +102,7 @@ public class App extends JFrame implements ActionListener{
                 app.setSize(1000,550);
                 app.setVisible(true);
                 app.setResizable(false);
+                LevelHelper levels = new LevelHelper();
         }
 
         @Override
