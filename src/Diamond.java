@@ -8,6 +8,12 @@ public class Diamond {
 
     public Diamond(){}
 
+    public Diamond(String color, int x, int y){
+        setX(x);
+        setY(y);
+        setColor(color);
+    }
+
     public int getX() {
         return x; }
 
@@ -35,7 +41,7 @@ public class Diamond {
                 this.color = Color.BLUE;
                 break;
             default:
-                this.color = Color.WHITE;
+                throw new RuntimeException("Diamond Color Does Not Exist");
         }
     }
 }

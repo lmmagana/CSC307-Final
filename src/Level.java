@@ -31,6 +31,9 @@ public class Level {
     public ArrayList<Diamond> getDiamonds() {
         return diamonds; }
 
+    public Diamond getDiamond(int pos){
+        return diamonds.get(pos);
+    }
 
     public void addDiamond(Diamond diamond){
         if(this.diamonds == null){

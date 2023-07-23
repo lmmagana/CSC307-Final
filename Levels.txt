@@ -1,0 +1,60 @@
+-Level 1
+Grid Size: 5
+Diamonds: 3
+Red 2 2
+Green 2 3
+Blue 4 2
+Spider Initial Position: 2 4
+Spider Initial Direction: Up
+
+-Level 2
+Grid Size: 5
+Diamonds: 3
+Green 2 2
+Blue 4 2
+Red 2 4
+Spider Initial Position: 4 4
+Spider Initial Direction: Up
+
+-Level 3
+Grid Size: 5
+Diamonds: 4
+Blue 3 2
+Blue 3 3
+Red 2 2
+Red 4 2
+Spider Initial Position: 3 4
+Spider Initial Direction: Up
+
+-Level 4
+Grid Size: 5
+Diamonds: 2
+Blue 2 2
+Blue 4 2
+Spider Initial Position: 3 1
+Spider Initial Direction: Down
+
+-Level 5
+Grid Size: 5
+Diamonds: 3
+Blue 5 4
+Green 5 5
+Green 3 5
+Spider Initial Position: 5 3
+Spider Initial Direction: Down
+
+-Level 6
+Grid Size: 5
+Diamonds: 7
+Red 2 1
+Red 2 2
+Blue 2 3
+Blue 3 3
+Blue 4 3
+Green 4 1
+Green 4 2
+Spider Initial Position: 1 1
+Spider Initial Direction: Right
+
+DYNAMIC LEVELS
+
