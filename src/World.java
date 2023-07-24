@@ -50,24 +50,25 @@ public class World extends JPanel {
             String spiderImageFile;
             switch (direction) {
                 case NORTH:
-                    spiderImageFile = "CSC307-Final/images/spider_north.png";
+                    spiderImageFile = "./images/spider_north.png";
                     break;
                 case EAST:
-                    spiderImageFile = "CSC307-Final/images/spider_east.png";
+                    spiderImageFile = "./images/spider_east.png";
                     break;
                 case SOUTH:
-                    spiderImageFile = "CSC307-Final/images/spider_south.png";
+                    spiderImageFile = "./images/spider_south.png";
                     break;
                 case WEST:
-                    spiderImageFile = "CSC307-Final/images/spider_west.png";
+                    spiderImageFile = "./images/spider_west.png";
                     break;
                 default:
                     return;
             }
 
-            // Load the spider image from the file
-            InputStream is = getClass().getResourceAsStream(spiderImageFile);
-            BufferedImage spiderImage = ImageIO.read(is);
+             //Load the spider image from the file
+//            InputStream is = getClass().getResourceAsStream(spiderImageFile);
+//            BufferedImage spiderImage = ImageIO.read(is);
+            BufferedImage spiderImage = ImageIO.read(new File(spiderImageFile));
 
             // Calculate new x and y coordinates to center the image within the cell
             int newX = x - spiderImage.getWidth() / 2;
@@ -75,6 +76,7 @@ public class World extends JPanel {
 
             // Draw the spider image at the new coordinates
             g.drawImage(spiderImage, newX, newY, null);
+            ImageIcon sp = new ImageIcon(spiderImageFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
