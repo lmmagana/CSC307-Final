@@ -19,7 +19,6 @@ public class WorldPanel extends JPanel implements ActionListener, ChangeListener
         world.setBounds(xOffset, yOffset, gridSize * cellSize, gridSize * cellSize);
         add(world);
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         // Handle button clicks or other actions if needed
