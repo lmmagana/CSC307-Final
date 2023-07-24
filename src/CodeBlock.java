@@ -1,2 +1,3 @@
-public class CodeBlock {
+public interface CodeBlock {
+    void execute(Spider spider, World grid);
 }
