@@ -11,6 +11,11 @@ public class Spider {
         WEST
     }
 
+    public enum TurnDirection {
+        LEFT,
+        RIGHT
+    }
+
     public Spider(int x, int y, Direction direction) {
         this.x = x;
         this.y = y;
