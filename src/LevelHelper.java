@@ -35,14 +35,13 @@ public class LevelHelper extends Observable {
                 if(txt[0].equals("-Level")){
                     System.out.println(txt[0] + " " + txt[1] + ": Generated");
                     Level currentLevel = new Level();
+                    currentLevel.setLevel("-Level: " + txt[1]);
                     currentLevel.setGridSize(getGrid(readLevels));
                     currentLevel.setNumberOfDiamonds(getNumberOfDiamonds(readLevels));
                     for(int i = 0; i < currentLevel.getNumberOfDiamonds(); i ++){
                         currentLevel.addDiamond(getDiamond(readLevels));
                     }
                     getSpider(currentLevel, readLevels);
-//                    getSpiderInitialPos(currentLevel, readLevels);
-//                    currentLevel.setSpiderDirection(getSpiderInitialDir(readLevels));
                     levels.add(currentLevel);
                 }
                 else if (txt[0].equals("DYNAMIC")){
@@ -125,29 +124,6 @@ public class LevelHelper extends Observable {
         currentLevel.addSpider(spider);
     }
 
-
-//    private void getSpiderInitialPos(Level currentLevel, Scanner readLevels){
-//        String[] line = readLevels.nextLine().split(" ");
-//        if(line.length == 5 && line[2].equals("Position:")){
-//            currentLevel.setSpiderX(Integer.parseInt(line[3]));
-//            currentLevel.setSpiderY(Integer.parseInt(line[4]));
-//        } else throw new RuntimeException("File not fomatted correctly when getting Spider Initial Position");
-//    }
-//
-//    private int getSpiderInitialDir(Scanner readLevels){
-//        String[] line = readLevels.nextLine().split(" ");
-//        if(line.length == 4 && line[2].equals("Direction:")){
-//            return switch (line[3]) {
-//                case "Up" -> 0;
-//                case "Right" -> 1;
-//                case "Down" -> 2;
-//                case "Left" -> 3;
-//                default -> 0;
-//            };
-//        }
-//        else throw new RuntimeException("File not formatted correctly when getting Initial Direction");
-//    }
-
     public Level getLevel(int level){
         return levels.get(level - 1);
     }
@@ -188,6 +164,7 @@ public class LevelHelper extends Observable {
 
     private void level7(){
         Level currentLevel = new Level();
+        currentLevel.setLevel("-Level: 7");
         currentLevel.setGridSize(gridSizes[new Random().nextInt(gridSizes.length)]);
         dynamicSpiderPosition(currentLevel);
         currentLevel.setNumberOfDiamonds(1);
@@ -201,6 +178,7 @@ public class LevelHelper extends Observable {
 
     private void level8(){
         Level currentLevel = new Level();
+        currentLevel.setLevel("-Level: 8");
         currentLevel.setGridSize(gridSizes[new Random().nextInt(gridSizes.length)]);
         dynamicSpiderPosition(currentLevel);
         currentLevel.setNumberOfDiamonds(currentLevel.getGridSize());
@@ -217,6 +195,7 @@ public class LevelHelper extends Observable {
 
     private void level9(){
         Level currentLevel = new Level();
+        currentLevel.setLevel("-Level: 9");
         currentLevel.setGridSize(gridSizes[new Random().nextInt(gridSizes.length)]);
         dynamicSpiderPosition(currentLevel);
         currentLevel.setNumberOfDiamonds(currentLevel.getGridSize());
@@ -234,6 +213,7 @@ public class LevelHelper extends Observable {
 
     private void level10(){
         Level currentLevel = new Level();
+        currentLevel.setLevel("-Level: 10");
         currentLevel.setGridSize(gridSizes[new Random().nextInt(gridSizes.length)]);
         dynamicSpiderPosition(currentLevel);
         currentLevel.setNumberOfDiamonds(3);
@@ -249,6 +229,7 @@ public class LevelHelper extends Observable {
 
     private void level11(){
         Level currentLevel = new Level();
+        currentLevel.setLevel("-Level: 11");
         currentLevel.setGridSize(gridSizes[new Random().nextInt(gridSizes.length)]);
         dynamicSpiderPosition(currentLevel);
         currentLevel.setNumberOfDiamonds((currentLevel.getGridSize() * 4) - 4);
@@ -269,6 +250,7 @@ public class LevelHelper extends Observable {
 
     private void level12(){
         Level currentLevel = new Level();
+        currentLevel.setLevel("-Level: 12");
         currentLevel.setGridSize(5); //Not Dynamic
         dynamicSpiderPosition(currentLevel);
         currentLevel.setNumberOfDiamonds(3);
@@ -284,6 +266,7 @@ public class LevelHelper extends Observable {
 
     private void level13(){
         Level currentLevel = new Level();
+        currentLevel.setLevel("-Level: 13");
         currentLevel.setGridSize(gridSizes[new Random().nextInt(gridSizes.length)]);
         dynamicSpiderPosition(currentLevel);
         currentLevel.setNumberOfDiamonds((currentLevel.getGridSize() * 2) - 1);
@@ -301,6 +284,7 @@ public class LevelHelper extends Observable {
 
     private void level14(){
         Level currentLevel = new Level();
+        currentLevel.setLevel("-Level: 14");
         currentLevel.setGridSize(gridSizes[new Random().nextInt(gridSizes.length)]);
         dynamicSpiderPosition(currentLevel);
         currentLevel.setNumberOfDiamonds((currentLevel.getGridSize() * 3) - 2);
@@ -320,6 +304,7 @@ public class LevelHelper extends Observable {
 
     private void level15(){
         Level currentLevel = new Level();
+        currentLevel.setLevel("-Level: 15");
         currentLevel.setGridSize(gridSizes[new Random().nextInt(gridSizes.length)]);
         dynamicSpiderPosition(currentLevel);
         currentLevel.setNumberOfDiamonds((currentLevel.getGridSize() * 2) - 1);
@@ -337,9 +322,5 @@ public class LevelHelper extends Observable {
     }
 
     private void dynamicSpiderPosition(Level currentlevel){
-        currentlevel.addSpider(new Spider(1, 1, Spider.Direction.EAST));
-//        currentlevel.setSpiderX(1);
-//        currentlevel.setSpiderY(1);
-//        currentlevel.setSpiderDirection(1);
-    }
+        currentlevel.addSpider(new Spider(1, 1, Spider.Direction.EAST)); }
 }
