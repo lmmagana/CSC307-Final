@@ -190,7 +190,6 @@ public class App extends JFrame implements ActionListener, ChangeListener {
         @Override
         public void actionPerformed(ActionEvent e) {
                 //System.out.println(e.getActionCommand());
-                InstructionList instructions = InstructionList.getInstructions(); //Singleton of Instructions
                 if (e.getSource().getClass().getName().equals("javax.swing.JButton")) {
                         switch(((JButton) e.getSource()).getText()){
                                 case("Directions"):
@@ -200,14 +199,12 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                             "Directions", JOptionPane.PLAIN_MESSAGE);
                                         break;
                                 case("Step"):
-                                        instructions.addStep();
                                         System.out.println("Step spider");
                                         InstructionList.getInstructions().addStep();
                                         // world.step();
                                         // or whatever it is supposed to be
                                         break;
                                 case("Turn"):
-                                        instructions.addTurn();
                                         System.out.println("Turn spider");
                                         InstructionList.getInstructions().addTurn();
                                         // world.red();
