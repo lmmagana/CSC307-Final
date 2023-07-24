@@ -16,12 +16,12 @@ public class StepCommandDecorator extends CodeBlockDecorator {
                 }
                 break;
             case EAST:
-                if (x < grid.getSize() - 1) {
+                if (x < grid.getGridSize() - 1) {
                     spider.setX(x + 1);
                 }
                 break;
             case SOUTH:
-                if (y < grid.getSize() - 1) {
+                if (y < grid.getGridSize() - 1) {
                     spider.setY(y + 1);
                 }
                 break;

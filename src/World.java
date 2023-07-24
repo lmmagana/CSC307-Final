@@ -1,4 +1,6 @@
-public class World {
+import javax.swing.*;
+
+public class World extends JPanel {
     private Cell[][] cells;
     private int size;
 
@@ -20,7 +22,7 @@ public class World {
         return cells[x][y];
     }
 
-    public int getSize() {
+    public int getGridSize() {
         return size;
     }
 

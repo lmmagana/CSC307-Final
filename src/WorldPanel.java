@@ -11,8 +11,17 @@ public class WorldPanel extends JPanel implements ActionListener, ChangeListener
 
         // left side
         // panel with the world buttons
-        JLabel gridPlaceholder = new JLabel("Grid goes here.");
+        /*JLabel gridPlaceholder = new JLabel("Grid goes here.");
         add(gridPlaceholder);
+        */
+
+        setLayout(null);
+
+        World world = new World(5);
+        world.setBounds(40, 10, 300, 300);
+        world.setBackground(Color.BLACK);
+        add(world);
+
 
     }
 
