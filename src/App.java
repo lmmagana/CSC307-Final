@@ -1,23 +1,36 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class App extends JFrame implements ActionListener{
+public class App extends JFrame implements ActionListener, ChangeListener {
 
-        private WorkArea workArea;
-        private JCheckBox clusterCheckbox, lineCheckbox;
-        //private ClusterHandler c;
+        private ConnectHelper c;
+        //private LevelHelper l;
 
         public App() {
-                super("Final Assignment");
-                //c = new ClusterHandler();
+                super("Spider World");
+                c = new ConnectHelper();
+                //l = new LevelHelper();
                 //InstructionList.getInstance().addObserver(c);
+                //InstructionList.getInstance().addObserver(l);
 
                 // upper panel
-                JPanel upperPanel = new JPanel(new GridLayout(2, 18));
+                JPanel upperPanel = new JPanel();
+                upperPanel.setBackground(Color.WHITE);
+                upperPanel.setBounds(0, 0, 1500, 50);
+                // upperPanel.setLayout(new GridLayout(1, 19));
+                add(upperPanel);
+
                 JLabel title = new JLabel("Spider World");
-                JLabel leveltext = new JLabel("Level");
+                upperPanel.add(title);
+                title.setFont(new Font("Calibri", Font.BOLD, 20));
+
+                JLabel level = new JLabel("Level");
+                upperPanel.add(level);
+
                 JButton levelOne = new JButton("1");
                 JButton levelTwo = new JButton("2");
                 JButton levelThree = new JButton("3");
@@ -33,16 +46,7 @@ public class App extends JFrame implements ActionListener{
                 JButton levelThirteen = new JButton("13");
                 JButton levelFourteen = new JButton("14");
                 JButton levelFifteen = new JButton("15");
-                JButton step = new JButton("Step");
-                JButton turn = new JButton("Turn");
-                JButton red = new JButton("Red");
-                JButton blue = new JButton("Blue");
-                JButton green = new JButton("Green");
-                JButton black = new JButton("Black");
-                JButton restartLevel = new JButton("Restart Level");
-                JButton directions = new JButton("Directions");
-                upperPanel.add(title);
-                upperPanel.add(leveltext);
+
                 upperPanel.add(levelOne);
                 upperPanel.add(levelTwo);
                 upperPanel.add(levelThree);
@@ -58,48 +62,113 @@ public class App extends JFrame implements ActionListener{
                 upperPanel.add(levelThirteen);
                 upperPanel.add(levelFourteen);
                 upperPanel.add(levelFifteen);
-                upperPanel.add(step);
-                upperPanel.add(turn);
-                upperPanel.add(red);
-                upperPanel.add(blue);
-                upperPanel.add(green);
-                upperPanel.add(black);
-                upperPanel.add(restartLevel);
-                upperPanel.add(directions);
 
-                // left panel
-                // will be dynamically resized
-                setLayout(new BorderLayout());
-                JPanel westPanel = new JPanel(new GridLayout(10,7));
-                westPanel.setBackground(Color.WHITE);
+                JButton directionsButton = new JButton("Directions");
+                upperPanel.add(directionsButton);
 
-                JButton exampleButton = new JButton("Example for World");
-                westPanel.add(exampleButton);
+                levelOne.addActionListener(this);
+                levelTwo.addActionListener(this);
+                levelThree.addActionListener(this);
+                levelFour.addActionListener(this);
+                levelFive.addActionListener(this);
+                levelSix.addActionListener(this);
+                levelSeven.addActionListener(this);
+                levelEight.addActionListener(this);
+                levelNine.addActionListener(this);
+                levelTen.addActionListener(this);
+                levelEleven.addActionListener(this);
+                levelTwelve.addActionListener(this);
+                levelThirteen.addActionListener(this);
+                levelFourteen.addActionListener(this);
+                levelFifteen.addActionListener(this);
+                directionsButton.addActionListener(this);
 
-                // right panel
+                // left side
+                // panel with the world buttons
+                JPanel worldButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                worldButtonPanel.setBackground(Color.WHITE);
+                worldButtonPanel.setBounds(0, 50, 750, 50);
+                add(worldButtonPanel);
 
+                JButton stepButton = new JButton("Step");
+                JButton turnButton = new JButton("Turn");
+                JButton redButton = new JButton("Red");
+                redButton.setBackground(Color.RED);
+                redButton.setOpaque(true);
+                redButton.setBorderPainted(false);
+                JButton blueButton = new JButton("Blue");
+                blueButton.setForeground(Color.WHITE);
+                blueButton.setBackground(Color.BLUE);
+                blueButton.setOpaque(true);
+                blueButton.setBorderPainted(false);
+                JButton greenButton = new JButton("Green");
+                greenButton.setBackground(Color.GREEN);
+                greenButton.setOpaque(true);
+                greenButton.setBorderPainted(false);
+                JButton blackButton = new JButton("Black");
+                blackButton.setBackground(Color.BLACK);
+                blackButton.setForeground(Color.WHITE);
+                blackButton.setOpaque(true);
+                blackButton.setBorderPainted(false);
 
+                worldButtonPanel.add(stepButton);
+                worldButtonPanel.add(turnButton);
+                worldButtonPanel.add(redButton);
+                worldButtonPanel.add(blueButton);
+                worldButtonPanel.add(greenButton);
+                worldButtonPanel.add(blackButton);
 
+                stepButton.addActionListener(this);
+                turnButton.addActionListener(this);
+                redButton.addActionListener(this);
+                blueButton.addActionListener(this);
+                greenButton.addActionListener(this);
+                blackButton.addActionListener(this);
 
+                // panel for the world
+                WorldPanel worldPanel = new WorldPanel();
+                worldPanel.setBackground(Color.WHITE);
+                worldPanel.setBounds(0, 100, 375, 750);
+                add(worldPanel);
 
-                // Group the checkboxes
-                ButtonGroup group = new ButtonGroup();
-                group.add(clusterCheckbox);
-                group.add(lineCheckbox);
+                // play and speed buttons
+                JPanel worldPlaySpeedPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                worldPlaySpeedPanel.setBackground(Color.WHITE);
+                worldPlaySpeedPanel.setBounds(375, 100, 375, 750);
+                add(worldPlaySpeedPanel);
 
-                add(westPanel,BorderLayout.WEST);
-                add(upperPanel, BorderLayout.NORTH);
+                JButton playButton = new JButton("Play");
+                worldPlaySpeedPanel.add(playButton);
 
-                // work area
-                // workArea = new WorkArea();
-                // workArea.setBackground(Color.GRAY);
-                // add(workArea,BorderLayout.CENTER);
+                JSlider speedSlider = new JSlider(1, 10);
+                worldPlaySpeedPanel.add(speedSlider);
+
+                playButton.addActionListener(this);
+                speedSlider.addChangeListener(this);
+
+                // right side
+                // workArea
+                WorkArea workAreaPanel = new WorkArea();
+                workAreaPanel.setBounds(750, 100, 750, 750);
+                add(workAreaPanel);
+
+                // host the restart button
+                JPanel restartPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+                restartPanel.setBackground(Color.WHITE);
+                restartPanel.setBounds(750, 50, 750, 50);
+                add(restartPanel);
+
+                JButton restartButton = new JButton("Restart Level");
+                restartPanel.add(restartButton);
+
+                restartButton.addActionListener(this);
         }
 
         public static void main(String[] args) {
                 App app = new App();
                 app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                app.setSize(1000,550);
+                app.setLayout(null);
+                app.setSize(1500,800);
                 app.setVisible(true);
                 app.setResizable(false);
                 LevelHelper levels = new LevelHelper();
@@ -108,21 +177,68 @@ public class App extends JFrame implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
                 System.out.println(e.getActionCommand());
-                /*
-                if (e.getActionCommand().equals("Run")){
-                        if (clusterCheckbox.isSelected()){
-                                workArea.setDrawLinesFlag(false);
-                                c.update(DataSource.getInstance(), workArea);
-                                workArea.repaint();
-                        }
-                        if (lineCheckbox.isSelected()){
-                                workArea.setDrawLinesFlag(true);
-                                LineHandler l = new LineHandler();
-                                DataSource.getInstance().addObserver(l);
-                                workArea.repaint();
-                        }
-                }
-                */
+                if (e.getSource().getClass().getName().equals("javax.swing.JButton")) {
 
+                        switch(((JButton) e.getSource()).getText()){
+                                case("Directions"):
+                                        JOptionPane.showMessageDialog(null, "Welcome to Spider World!\n" +
+                                                "Use the 'step' and 'turn' buttons to guide the spider around her room.\n" +
+                                                "A color button paints the square the spider is standing on. Can you guide the spider to paint the squares marked with diamonds?",
+                                            "Directions", JOptionPane.PLAIN_MESSAGE);
+                                        break;
+                                case("Step"):
+                                        System.out.println("Step spider");
+                                        InstructionList.getInstance().addInstuction("Step");
+                                        // world.step();
+                                        // or whatever it is supposed to be
+                                        break;
+                                case("Turn"):
+                                        System.out.println("Turn spider");
+                                        InstructionList.getInstance().addInstuction("Turn");
+                                        // world.red();
+                                        // or whatever it is supposed to be
+                                        break;
+                                case("Red"):
+                                        System.out.println("Paint red");
+                                        InstructionList.getInstance().addInstuction("Paint Red");
+                                        // world.red();
+                                        // or whatever it is supposed to be
+                                        break;
+                                case("Blue"):
+                                        System.out.println("Paint Blue");
+                                        InstructionList.getInstance().addInstuction("Paint Blue");
+                                        // world.blue();
+                                        // or whatever it is supposed to be
+                                        break;
+                                case("Green"):
+                                        System.out.println("Paint Green");
+                                        InstructionList.getInstance().addInstuction("Paint Green");
+                                        // world.green();
+                                        // or whatever it is supposed to be
+                                        break;
+                                case("Black"):
+                                        System.out.println("Paint Black");
+                                        InstructionList.getInstance().addInstuction("Paint Black");
+                                        // world.black();
+                                        // or whatever it is supposed to be
+                                        break;
+                                case("Play"):
+                                        System.out.println("Play world");
+                                        // world.play();
+                                        // or whatever it is supposed to be
+                                        break;
+                        }
+
+
+
+                } else if(e.getSource().getClass().getName().equals("javax.swing.JSlider")) {
+                        System.out.println("Slider was moved.");
+                }
+
+        }
+
+        @Override
+        public void stateChanged(ChangeEvent e) {
+                System.out.println(e.getSource());
         }
 }
