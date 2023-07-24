@@ -4,6 +4,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 public class App extends JFrame implements ActionListener, ChangeListener {
 
@@ -171,7 +172,22 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 app.setSize(1500,800);
                 app.setVisible(true);
                 app.setResizable(false);
-                LevelHelper levels = new LevelHelper();
+                LevelHelper levels = LevelHelper.getLevels(); //Singleton of levels
+                InstructionList instructions = InstructionList.getInstructions(); //Singleton of Instructions
+                instructions.addStep();
+                instructions.addStep();
+                instructions.addTurn();
+                instructions.addRepeatUntilColor();
+                LinkedList<Instruction> loop1 = instructions.getInstruction(3).getRepeatInstructions();
+                instructions.addStep(loop1);
+                instructions.addTurn(loop1);
+                instructions.addRepeatUntilColor(loop1);
+                instructions.addPaintGreen(loop1.get(2).getRepeatInstructions());
+                instructions.addRepeatUntilColor();
+                instructions.addStep(instructions.getLast().getRepeatInstructions());
+                instructions.addTurn();
+
+
         }
 
         @Override
@@ -188,37 +204,37 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         break;
                                 case("Step"):
                                         System.out.println("Step spider");
-                                        InstructionList.getInstance().addInstuction("Step");
+                                        InstructionList.getInstructions().addStep();
                                         // world.step();
                                         // or whatever it is supposed to be
                                         break;
                                 case("Turn"):
                                         System.out.println("Turn spider");
-                                        InstructionList.getInstance().addInstuction("Turn");
+                                        InstructionList.getInstructions().addTurn();
                                         // world.red();
                                         // or whatever it is supposed to be
                                         break;
                                 case("Red"):
                                         System.out.println("Paint red");
-                                        InstructionList.getInstance().addInstuction("Paint Red");
+                                        InstructionList.getInstructions().addPaintRed();
                                         // world.red();
                                         // or whatever it is supposed to be
                                         break;
                                 case("Blue"):
                                         System.out.println("Paint Blue");
-                                        InstructionList.getInstance().addInstuction("Paint Blue");
+                                        InstructionList.getInstructions().addPaintBlue();
                                         // world.blue();
                                         // or whatever it is supposed to be
                                         break;
                                 case("Green"):
                                         System.out.println("Paint Green");
-                                        InstructionList.getInstance().addInstuction("Paint Green");
+                                        InstructionList.getInstructions().addPaintGreen();
                                         // world.green();
                                         // or whatever it is supposed to be
                                         break;
                                 case("Black"):
                                         System.out.println("Paint Black");
-                                        InstructionList.getInstance().addInstuction("Paint Black");
+                                        InstructionList.getInstructions().addPaintBlack();
                                         // world.black();
                                         // or whatever it is supposed to be
                                         break;

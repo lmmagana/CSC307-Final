@@ -17,7 +17,7 @@ class DraggableStepLabel extends JLabel {
 
                 ImageIcon imageIcon = new ImageIcon("./images/stepsmall.png");
                 parentPanel.addDraggableStepLabel(imageIcon, 680, 25); // Create a new label at the initial position
-                InstructionList.getInstance().addInstuction("Step");
+                InstructionList.getInstructions().addStep();
 
             }
         });
@@ -48,7 +48,7 @@ class DraggableTurnLabel extends JLabel {
                 ImageIcon imageIcon = new ImageIcon("./images/turnsmall.png");
 
                 parentPanel.addDraggableTurnLabel(imageIcon, 680, 75); // Create a new label at the initial position
-                InstructionList.getInstance().addInstuction("Turn");
+                InstructionList.getInstructions().addTurn();
 
             }
         });

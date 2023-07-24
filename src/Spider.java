@@ -104,9 +104,9 @@ public class Spider {
     @Override
     public String toString() {
         return "Spider{" +
-                "x=" + x +
-                ", y=" + y +
-                ", direction=" + direction +
+                "X: " + x +
+                ", Y: " + y +
+                ", Direction: " + direction +
                 '}';
     }
 }
