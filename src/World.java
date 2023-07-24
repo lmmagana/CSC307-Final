@@ -12,22 +12,13 @@ public class World extends JPanel {
     private int size;
     private int cellSize = 60;
     private Spider spider;
-
-    private BufferedImage spiderImage; // Add a BufferedImage to store the spider image
-
+    
     public World(int size) {
         this.size = size;
         this.cells = new Cell[size][size];
         initializeGrid();
-        setBackground(Color.BLACK); // Set the background color to black
-        // spider = new Spider(0, 2, Spider.Direction.NORTH); 
-
-        try {
-            // Load the spider image from the "images" folder
-            spiderImage = ImageIO.read(new File("images/spider_north.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        setBackground(Color.BLACK);
+        spider = new Spider(1, 3, Spider.Direction.NORTH);
     }
     private void initializeGrid() {
         for (int i = 0; i < size; i++) {
@@ -51,10 +42,28 @@ public class World extends JPanel {
         drawGrid(g);
         // drawSpider(g);
     }
-    private void drawSpider(Graphics g, int x, int y) {
+    private void drawSpider(Graphics g, int x, int y, Spider.Direction direction) {
         try {
+            String spiderImageFile;
+            switch (direction) {
+                case NORTH:
+                    spiderImageFile = "CSC307-Final/images/spider_north.png";
+                    break;
+                case EAST:
+                    spiderImageFile = "CSC307-Final/images/spider_east.png";
+                    break;
+                case SOUTH:
+                    spiderImageFile = "CSC307-Final/images/spider_south.png";
+                    break;
+                case WEST:
+                    spiderImageFile = "CSC307-Final/images/spider_west.png";
+                    break;
+                default:
+                    return;
+            }
+
             // Load the spider image from the file
-            InputStream is = getClass().getResourceAsStream("CSC307-Final/images/spider_north.png");
+            InputStream is = getClass().getResourceAsStream(spiderImageFile);
             BufferedImage spiderImage = ImageIO.read(is);
 
             // Calculate new x and y coordinates to center the image within the cell
@@ -67,7 +76,6 @@ public class World extends JPanel {
             e.printStackTrace();
         }
     }
-
     private void drawGrid(Graphics g) {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
@@ -89,8 +97,8 @@ public class World extends JPanel {
                 } else if (row == 1 && col == 3) {
                     drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.BLUE);
                 }
-                else if (row == 3 && col == 1) {
-                    drawSpider(g, x + cellSize / 2, y + cellSize / 2);
+                if (row == spider.getY() && col == spider.getX()) {
+                    drawSpider(g, x + cellSize / 2, y + cellSize / 2, spider.getDirection());
                 }
                 g.setColor(Color.WHITE); // Reset the color for the next grid cell
             }
