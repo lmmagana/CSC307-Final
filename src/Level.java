@@ -2,15 +2,15 @@ import java.util.ArrayList;
 
 public class Level {
 
+    private String level; //For printing purposes
     private int gridSize;
     private int numberOfDiamonds;
     private ArrayList<Diamond> diamonds;
-//    private int spiderX;
-//    private int spiderY;
-//    private int spiderDirection;
     private Spider spider;
 
     public Level(){ }
+
+    public void setLevel(String str){ level = str;}
 
     public int getGridSize() {
         return gridSize; }
@@ -57,5 +57,10 @@ public class Level {
 
     public void addSpider(Spider spider){
         this.spider = spider;
+    }
+
+    @Override
+    public String toString(){
+        return this.level;
     }
 }

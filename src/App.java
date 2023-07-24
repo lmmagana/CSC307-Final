@@ -9,7 +9,6 @@ import java.util.LinkedList;
 public class App extends JFrame implements ActionListener, ChangeListener {
 
         private ConnectHelper c;
-        //private LevelHelper l;
 
         public App() {
                 super("Spider World");
@@ -182,7 +181,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 instructions.addStep(loop1);
                 instructions.addTurn(loop1);
                 instructions.addRepeatUntilColor(loop1);
-                instructions.addPaintGreen(loop1.get(2).getRepeatInstructions());
+                instructions.addPaintGreen(loop1.getLast().getRepeatInstructions());
                 instructions.addRepeatUntilColor();
                 instructions.addStep(instructions.getLast().getRepeatInstructions());
                 instructions.addTurn();
