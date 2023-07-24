@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class World extends JPanel {
 
@@ -19,7 +20,7 @@ public class World extends JPanel {
         this.cells = new Cell[size][size];
         initializeGrid();
         setBackground(Color.BLACK); // Set the background color to black
-        spider = new Spider(2, 2, Spider.Direction.NORTH); 
+        // spider = new Spider(0, 2, Spider.Direction.NORTH); 
 
         try {
             // Load the spider image from the "images" folder
@@ -48,18 +49,24 @@ public class World extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawGrid(g);
-        drawSpider(g);
+        // drawSpider(g);
     }
-    private void drawSpider(Graphics g) {
-        int x = spider.getX() * cellSize;
-        int y = spider.getY() * cellSize;
+    private void drawSpider(Graphics g, int x, int y) {
+        try {
+            // Load the spider image from the file
+            InputStream is = getClass().getResourceAsStream("CSC307-Final/images/spider_north.png");
+            BufferedImage spiderImage = ImageIO.read(is);
 
-        // Draw the spider image at its current position (north-facing) in the first cell
-        if (spider.getX() == 2 && spider.getY() == 4) {
-            g.drawImage(spiderImage, x + 10, y + 10, cellSize - 20, cellSize - 20, null);
+            // Calculate new x and y coordinates to center the image within the cell
+            int newX = x - spiderImage.getWidth() / 2;
+            int newY = y - spiderImage.getHeight() / 2;
+
+            // Draw the spider image at the new coordinates
+            g.drawImage(spiderImage, newX, newY, null);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
 
     private void drawGrid(Graphics g) {
         for (int row = 0; row < size; row++) {
@@ -75,14 +82,16 @@ public class World extends JPanel {
                     g.fillRect(x + 1, y + 1, cellSize - 1, cellSize - 1);
                 }
 
-                if (row == 1 && col == 1) { // Check if it's the second grid cell
-                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.RED); // Draw red diamond
-                } else if (row == 2 && col == 1) { // Check if it's the third grid cell
-                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.GREEN); // Draw green diamond
-                } else if (row == 1 && col == 3) { // Check if it's the fourth grid cell
-                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.BLUE); // Draw green diamond
+                if (row == 1 && col == 1) {
+                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.RED);
+                } else if (row == 2 && col == 1) {
+                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.GREEN);
+                } else if (row == 1 && col == 3) {
+                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.BLUE);
                 }
-
+                else if (row == 3 && col == 1) {
+                    drawSpider(g, x + cellSize / 2, y + cellSize / 2);
+                }
                 g.setColor(Color.WHITE); // Reset the color for the next grid cell
             }
         }
@@ -92,7 +101,7 @@ public class World extends JPanel {
         g.setColor(color);
         int[] xPoints = {x, x + 5, x, x - 5}; // x-coordinates for diamond
         int[] yPoints = {y - 5, y, y + 5, y}; // y-coordinates for diamond
-        g.fillPolygon(xPoints, yPoints, 4); // Draw the diamond
+        g.fillPolygon(xPoints, yPoints, 4);
     }
 
 
