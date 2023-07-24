@@ -2,15 +2,22 @@ import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Random;
 import java.util.Scanner; // Import the Scanner class to read text files
 
-public class LevelHelper {
+public class LevelHelper extends Observable {
 
-    private static ArrayList<Level> levels;
+    private static LevelHelper _instance;
+    private ArrayList<Level> levels;
     private static final int[] gridSizes = {3, 4, 5, 6, 7};
 
-    public LevelHelper(){
+    public static LevelHelper getLevels(){
+        if(_instance == null) _instance = new LevelHelper();
+        return _instance;
+    }
+
+    private LevelHelper(){
         File f = new File("Levels.txt");
         try {
             System.out.println(f.getCanonicalPath());
@@ -33,8 +40,9 @@ public class LevelHelper {
                     for(int i = 0; i < currentLevel.getNumberOfDiamonds(); i ++){
                         currentLevel.addDiamond(getDiamond(readLevels));
                     }
-                    getSpiderInitialPos(currentLevel, readLevels);
-                    currentLevel.setSpiderDirection(getSpiderInitialDir(readLevels));
+                    getSpider(currentLevel, readLevels);
+//                    getSpiderInitialPos(currentLevel, readLevels);
+//                    currentLevel.setSpiderDirection(getSpiderInitialDir(readLevels));
                     levels.add(currentLevel);
                 }
                 else if (txt[0].equals("DYNAMIC")){
@@ -85,27 +93,60 @@ public class LevelHelper {
         } else throw new RuntimeException("File not formatted correctly when getting Diamonds");
     }
 
-    private void getSpiderInitialPos(Level currentLevel, Scanner readLevels){
+    private void getSpider(Level currentLevel, Scanner readLevels) {
+        Spider spider = new Spider(1, 1, Spider.Direction.EAST);
         String[] line = readLevels.nextLine().split(" ");
-        if(line.length == 5 && line[2].equals("Position:")){
-            currentLevel.setSpiderX(Integer.parseInt(line[3]));
-            currentLevel.setSpiderY(Integer.parseInt(line[4]));
+        if (line.length == 5 && line[2].equals("Position:")) {
+            spider.setX(Integer.parseInt(line[3]));
+            spider.setY(Integer.parseInt(line[4]));
         } else throw new RuntimeException("File not fomatted correctly when getting Spider Initial Position");
+
+        line = readLevels.nextLine().split(" ");
+        if (line.length == 4 && line[2].equals("Direction:")) {
+            switch (line[3]) {
+                case "Up":
+                    spider.setDirection(Spider.Direction.NORTH);
+                    break;
+                case "Right":
+                    spider.setDirection(Spider.Direction.EAST);
+                    break;
+                case "Down":
+                    spider.setDirection(Spider.Direction.SOUTH);
+                    break;
+                case "Left":
+                    spider.setDirection(Spider.Direction.WEST);
+                    break;
+                default:
+                    spider.setDirection(Spider.Direction.NORTH);
+                    break;
+            }
+            ;
+        } else throw new RuntimeException("File not formatted correctly when getting Initial Direction");
+        currentLevel.addSpider(spider);
     }
 
-    private int getSpiderInitialDir(Scanner readLevels){
-        String[] line = readLevels.nextLine().split(" ");
-        if(line.length == 4 && line[2].equals("Direction:")){
-            return switch (line[3]) {
-                case "Up" -> 0;
-                case "Right" -> 1;
-                case "Down" -> 2;
-                case "Left" -> 3;
-                default -> 0;
-            };
-        }
-        else throw new RuntimeException("File not formatted correctly when getting Initial Direction");
-    }
+
+//    private void getSpiderInitialPos(Level currentLevel, Scanner readLevels){
+//        String[] line = readLevels.nextLine().split(" ");
+//        if(line.length == 5 && line[2].equals("Position:")){
+//            currentLevel.setSpiderX(Integer.parseInt(line[3]));
+//            currentLevel.setSpiderY(Integer.parseInt(line[4]));
+//        } else throw new RuntimeException("File not fomatted correctly when getting Spider Initial Position");
+//    }
+//
+//    private int getSpiderInitialDir(Scanner readLevels){
+//        String[] line = readLevels.nextLine().split(" ");
+//        if(line.length == 4 && line[2].equals("Direction:")){
+//            return switch (line[3]) {
+//                case "Up" -> 0;
+//                case "Right" -> 1;
+//                case "Down" -> 2;
+//                case "Left" -> 3;
+//                default -> 0;
+//            };
+//        }
+//        else throw new RuntimeException("File not formatted correctly when getting Initial Direction");
+//    }
 
     public Level getLevel(int level){
         return levels.get(level - 1);
@@ -151,7 +192,11 @@ public class LevelHelper {
         dynamicSpiderPosition(currentLevel);
         currentLevel.setNumberOfDiamonds(1);
         currentLevel.addDiamond(new Diamond("Red", 2, 1));
-        levels.set(6, currentLevel);
+        if(levels.size() < 7){
+            levels.add(currentLevel);
+        } else
+            levels.set(6, currentLevel);
+        System.out.println("-Level 7: Generated");
     }
 
     private void level8(){
@@ -163,7 +208,11 @@ public class LevelHelper {
             currentLevel.addDiamond(new Diamond("Blue", i, 1));
         }
         currentLevel.addDiamond(new Diamond("Red", currentLevel.getGridSize(), currentLevel.getGridSize()));
-        levels.set(7, currentLevel);
+        if(levels.size() < 8){
+            levels.add(currentLevel);
+        } else
+            levels.set(7, currentLevel);
+        System.out.println("-Level 8: Generated");
     }
 
     private void level9(){
@@ -176,7 +225,11 @@ public class LevelHelper {
             currentLevel.addDiamond(new Diamond("Blue", currentLevel.getGridSize() - i, i + 1));
         }
         currentLevel.addDiamond(new Diamond("Red", 1, currentLevel.getGridSize()));
-        levels.set(8, currentLevel);
+        if(levels.size() < 9){
+            levels.add(currentLevel);
+        } else
+            levels.set(8, currentLevel);
+        System.out.println("-Level 9: Generated");
     }
 
     private void level10(){
@@ -187,7 +240,11 @@ public class LevelHelper {
         currentLevel.addDiamond(new Diamond("Red", 2, 1));
         currentLevel.addDiamond(new Diamond("Red", 2, 2));
         currentLevel.addDiamond(new Diamond("Red", 1, 2));
-        levels.set(9, currentLevel);
+        if(levels.size() < 10){
+            levels.add(currentLevel);
+        } else
+            levels.set(9, currentLevel);
+        System.out.println("-Level 10: Generated");
     }
 
     private void level11(){
@@ -196,14 +253,18 @@ public class LevelHelper {
         dynamicSpiderPosition(currentLevel);
         currentLevel.setNumberOfDiamonds((currentLevel.getGridSize() * 4) - 4);
         for(int i = 1; i <= currentLevel.getGridSize(); i ++){
-            currentLevel.addDiamond(new Diamond("Red", i, 0));
+            currentLevel.addDiamond(new Diamond("Red", i, 1));
             currentLevel.addDiamond(new Diamond("Red", i, currentLevel.getGridSize()));
         }
         for(int i = 2; i < currentLevel.getGridSize(); i ++){
             currentLevel.addDiamond(new Diamond("Red", 1, i));
             currentLevel.addDiamond(new Diamond("Red", currentLevel.getGridSize(), i));
         }
-        levels.set(10, currentLevel);
+        if(levels.size() < 11){
+            levels.add(currentLevel);
+        } else
+            levels.set(10, currentLevel);
+        System.out.println("-Level 11: Generated");
     }
 
     private void level12(){
@@ -214,7 +275,11 @@ public class LevelHelper {
         currentLevel.addDiamond(new Diamond("Red", 4, 2));
         currentLevel.addDiamond(new Diamond("Blue", 3, 3));
         currentLevel.addDiamond(new Diamond("Green", 2, 4));
-        levels.set(11, currentLevel);
+        if(levels.size() < 12){
+            levels.add(currentLevel);
+        } else
+            levels.set(11, currentLevel);
+        System.out.println("-Level 12: Generated");
     }
 
     private void level13(){
@@ -227,7 +292,11 @@ public class LevelHelper {
             currentLevel.addDiamond(new Diamond("Red", 1, i));
             currentLevel.addDiamond(new Diamond("Red", i, currentLevel.getGridSize()));
         }
-        levels.set(12, currentLevel);
+        if(levels.size() < 13){
+            levels.add(currentLevel);
+        } else
+            levels.set(12, currentLevel);
+        System.out.println("-Level 13: Generated");
     }
 
     private void level14(){
@@ -236,32 +305,41 @@ public class LevelHelper {
         dynamicSpiderPosition(currentLevel);
         currentLevel.setNumberOfDiamonds((currentLevel.getGridSize() * 3) - 2);
         for(int i = 1; i <= currentLevel.getGridSize(); i ++){
-            currentLevel.addDiamond(new Diamond("Red", i, 0));
+            currentLevel.addDiamond(new Diamond("Red", i, 1));
             currentLevel.addDiamond(new Diamond("Red", i, currentLevel.getGridSize()));
         }
         for(int i = 1; i < currentLevel.getGridSize() - 1; i ++){
             currentLevel.addDiamond(new Diamond("Red", currentLevel.getGridSize() - i, i + 1));
         }
-        levels.set(13, currentLevel);
+        if(levels.size() < 14){
+            levels.add(currentLevel);
+        } else
+            levels.set(13, currentLevel);
+        System.out.println("-Level 14: Generated");
     }
 
     private void level15(){
         Level currentLevel = new Level();
         currentLevel.setGridSize(gridSizes[new Random().nextInt(gridSizes.length)]);
         dynamicSpiderPosition(currentLevel);
-
+        currentLevel.setNumberOfDiamonds((currentLevel.getGridSize() * 2) - 1);
         for(int i = 0; i < currentLevel.getGridSize(); i ++){
             currentLevel.addDiamond(new Diamond("Blue", currentLevel.getGridSize() - i, i + 1));
         }
         for(int i = 1; i < currentLevel.getGridSize(); i ++){
             currentLevel.addDiamond(new Diamond("Red", currentLevel.getGridSize() - i, i));
         }
-        levels.set(14, currentLevel);
+        if(levels.size() < 15){
+            levels.add(currentLevel);
+        } else
+            levels.set(14, currentLevel);
+        System.out.println("-Level 15: Generated");
     }
 
     private void dynamicSpiderPosition(Level currentlevel){
-        currentlevel.setSpiderX(1);
-        currentlevel.setSpiderY(1);
-        currentlevel.setSpiderDirection(1);
+        currentlevel.addSpider(new Spider(1, 1, Spider.Direction.EAST));
+//        currentlevel.setSpiderX(1);
+//        currentlevel.setSpiderY(1);
+//        currentlevel.setSpiderDirection(1);
     }
 }

@@ -44,4 +44,15 @@ public class Diamond {
                 throw new RuntimeException("Diamond Color Does Not Exist");
         }
     }
+    @Override
+    public String toString() {
+        if(getColor() == Color.RED)
+            return "Diamond{Color: Red, " + "X: " + getX() + ", Y: " + getY() + "}";
+        if(getColor() == Color.BLUE)
+            return "Diamond{Color: Blue, " + "X: " + getX() + ", Y: " + getY() + "}";
+        if(getColor() == Color.GREEN)
+            return "Diamond{Color: Green, " + "X: " + getX() + ", Y: " + getY() + "}";
+        else
+            return "Color: " + getColor() + ", X: " + getX() + ", Y: " + getY() + "}";
+    }
 }

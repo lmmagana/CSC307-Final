@@ -57,4 +57,3 @@ Spider Initial Position: 1 1
 Spider Initial Direction: Right
 
 DYNAMIC LEVELS
-

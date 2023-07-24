@@ -2,17 +2,13 @@ import java.util.ArrayList;
 
 public class Level {
 
-    private static final int UP = 0;
-    private static final int RIGHT = 1;
-    private static final int DOWN = 2;
-    private static final int LEFT = 3;
-
     private int gridSize;
     private int numberOfDiamonds;
     private ArrayList<Diamond> diamonds;
-    private int spiderX;
-    private int spiderY;
-    private int spiderDirection;
+//    private int spiderX;
+//    private int spiderY;
+//    private int spiderDirection;
+    private Spider spider;
 
     public Level(){ }
 
@@ -42,20 +38,24 @@ public class Level {
         this.diamonds.add(diamond); }
 
     public int getSpiderX() {
-        return spiderX; }
+        return this.spider.getX(); }
 
     public void setSpiderX(int spiderX) {
-        this.spiderX = spiderX; }
+        this.spider.setX(spiderX); }
 
     public int getSpiderY() {
-        return spiderY; }
+        return this.getSpiderY(); }
 
     public void setSpiderY(int spiderY) {
-        this.spiderY = spiderY; }
+        this.spider.setY(spiderY); }
 
-    public int getSpiderDirection() {
-        return spiderDirection; }
+    public Spider.Direction getSpiderDirection() {
+        return this.spider.getDirection(); }
 
-    public void setSpiderDirection(int spiderDirection) {
-        this.spiderDirection = spiderDirection; }
+    public void setSpiderDirection(Spider.Direction direction) {
+        this.spider.setDirection(direction); }
+
+    public void addSpider(Spider spider){
+        this.spider = spider;
+    }
 }
