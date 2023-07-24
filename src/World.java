@@ -13,8 +13,8 @@ public class World extends JPanel {
     private int cellSize = 60;
     private Spider spider;
     
-    public World(int size) {
-        this.size = size;
+    public World(Level lvl) {
+        this.size = lvl.getGridSize();
         this.cells = new Cell[size][size];
         initializeGrid();
         setBackground(Color.BLACK);

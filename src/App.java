@@ -185,15 +185,13 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 instructions.addRepeatUntilColor();
                 instructions.addStep(instructions.getLast().getRepeatInstructions());
                 instructions.addTurn();
-
-
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-                System.out.println(e.getActionCommand());
+                //System.out.println(e.getActionCommand());
+                InstructionList instructions = InstructionList.getInstructions(); //Singleton of Instructions
                 if (e.getSource().getClass().getName().equals("javax.swing.JButton")) {
-
                         switch(((JButton) e.getSource()).getText()){
                                 case("Directions"):
                                         JOptionPane.showMessageDialog(null, "Welcome to Spider World!\n" +
@@ -202,12 +200,14 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                             "Directions", JOptionPane.PLAIN_MESSAGE);
                                         break;
                                 case("Step"):
+                                        instructions.addStep();
                                         System.out.println("Step spider");
                                         InstructionList.getInstructions().addStep();
                                         // world.step();
                                         // or whatever it is supposed to be
                                         break;
                                 case("Turn"):
+                                        instructions.addTurn();
                                         System.out.println("Turn spider");
                                         InstructionList.getInstructions().addTurn();
                                         // world.red();
@@ -242,6 +242,54 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         // world.play();
                                         // or whatever it is supposed to be
                                         break;
+                                case("Restart Level"):
+                                        System.out.println("Restart Level");
+                                        break;
+                                case("1"):
+                                        System.out.println("Level 1");
+                                        break;
+                                case("2"):
+                                        System.out.println("Level 2");
+                                        break;
+                                case("3"):
+                                        System.out.println("Level 3");
+                                        break;
+                                case("4"):
+                                        System.out.println("Level 4");
+                                        break;
+                                case("5"):
+                                        System.out.println("Level 5");
+                                        break;
+                                case("6"):
+                                        System.out.println("Level 6");
+                                        break;
+                                case("7"):
+                                        System.out.println("Level 7");
+                                        break;
+                                case("8"):
+                                        System.out.println("Level 8");
+                                        break;
+                                case("9"):
+                                        System.out.println("Level 9");
+                                        break;
+                                case("10"):
+                                        System.out.println("Level 10");
+                                        break;
+                                case("11"):
+                                        System.out.println("Level 11");
+                                        break;
+                                case("12"):
+                                        System.out.println("Level 12");
+                                        break;
+                                case("13"):
+                                        System.out.println("Level 13");
+                                        break;
+                                case("14"):
+                                        System.out.println("Level 14");
+                                        break;
+                                case("15"):
+                                        System.out.println("Level 15");
+                                        break;
                         }
 
 
@@ -254,6 +302,6 @@ public class App extends JFrame implements ActionListener, ChangeListener {
 
         @Override
         public void stateChanged(ChangeEvent e) {
-                System.out.println(e.getSource());
+                System.out.println("Slider was moved.");
         }
 }
