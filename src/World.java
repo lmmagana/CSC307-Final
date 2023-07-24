@@ -36,11 +36,14 @@ public class World extends JPanel {
         return size;
     }
 
+    public Spider getSpider() {
+        return spider;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawGrid(g);
-        // drawSpider(g);
     }
     private void drawSpider(Graphics g, int x, int y, Spider.Direction direction) {
         try {

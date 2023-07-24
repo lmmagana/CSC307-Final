@@ -28,4 +28,5 @@ public class WorldPanel extends JPanel implements ActionListener, ChangeListener
     public void stateChanged(ChangeEvent e) {
         // Handle state changes of components if needed
     }
+
 }
