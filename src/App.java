@@ -9,6 +9,7 @@ import java.util.LinkedList;
 public class App extends JFrame implements ActionListener, ChangeListener {
 
         private ConnectHelper c;
+        public static int level = 1;
 
         public App() {
                 super("Spider World");
@@ -241,51 +242,67 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         break;
                                 case("Restart Level"):
                                         System.out.println("Restart Level");
+                                        InstructionList.getInstructions().clearInstructionList();
                                         break;
                                 case("1"):
                                         System.out.println("Level 1");
+                                        App.level = 1;
                                         break;
                                 case("2"):
                                         System.out.println("Level 2");
+                                        App.level = 2;
                                         break;
                                 case("3"):
                                         System.out.println("Level 3");
+                                        App.level = 3;
                                         break;
                                 case("4"):
                                         System.out.println("Level 4");
+                                        App.level = 4;
                                         break;
                                 case("5"):
                                         System.out.println("Level 5");
+                                        App.level = 5;
                                         break;
                                 case("6"):
                                         System.out.println("Level 6");
+                                        App.level = 6;
                                         break;
                                 case("7"):
                                         System.out.println("Level 7");
+                                        App.level = 7;
                                         break;
                                 case("8"):
                                         System.out.println("Level 8");
+                                        App.level = 8;
                                         break;
                                 case("9"):
                                         System.out.println("Level 9");
+                                        App.level = 9;
                                         break;
                                 case("10"):
                                         System.out.println("Level 10");
+                                        App.level = 10;
                                         break;
                                 case("11"):
                                         System.out.println("Level 11");
+                                        App.level = 11;
                                         break;
                                 case("12"):
                                         System.out.println("Level 12");
+                                        App.level = 12;
                                         break;
                                 case("13"):
                                         System.out.println("Level 13");
+                                        App.level = 13;
                                         break;
                                 case("14"):
                                         System.out.println("Level 14");
+                                        App.level = 14;
                                         break;
                                 case("15"):
                                         System.out.println("Level 15");
+                                        App.level = 15;
                                         break;
                         }
 
