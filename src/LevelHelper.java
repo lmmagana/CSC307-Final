@@ -9,8 +9,24 @@ import java.util.Scanner; // Import the Scanner class to read text files
 public class LevelHelper extends Observable {
 
     private static LevelHelper _instance;
+    private int lvl = 1;
+    private int speed = 255;
     private ArrayList<Level> levels;
     private static final int[] gridSizes = {3, 4, 5, 6, 7};
+
+    public int getCurrentLevel(){return lvl;}
+    public void changeCurrentLevel(int lvl){
+        _instance.lvl = lvl;
+        setChanged();
+        notifyObservers();
+    }
+
+    public int getRunSpeed(){return speed;}
+    public void changeRunSpeed(int runSpeed){
+        _instance.speed = runSpeed;
+        setChanged();
+        notifyObservers();
+    }
 
     public static LevelHelper getLevels(){
         if(_instance == null) _instance = new LevelHelper();
@@ -124,8 +140,8 @@ public class LevelHelper extends Observable {
         currentLevel.addSpider(spider);
     }
 
-    public Level getLevel(int level){
-        return levels.get(level - 1);
+    public Level getLevel(){
+        return levels.get(lvl - 1);
     }
 
     public void regenerateLevel(int level){

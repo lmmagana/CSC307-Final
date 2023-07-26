@@ -9,7 +9,6 @@ import java.util.LinkedList;
 public class App extends JFrame implements ActionListener, ChangeListener {
 
         private ConnectHelper c;
-        public static int level = 1;
 
         public App() {
                 super("Spider World");
@@ -174,23 +173,56 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 app.setResizable(false);
                 LevelHelper levels = LevelHelper.getLevels(); //Singleton of levels
                 InstructionList instructions = InstructionList.getInstructions(); //Singleton of Instructions
+                Run result = new Run();
+                levels.addObserver(result); //Observer updates level info
+
+                //Test Level 1
+                instructions.addStep();
+                instructions.addPaintGreen();
+                instructions.addStep();
+                instructions.addPaintRed();
+                instructions.addTurn();
                 instructions.addStep();
                 instructions.addStep();
+                instructions.addPaintBlue();
+                Boolean check = result.execute();
+                System.out.println(check);
+
+                //TEST Level 8 W/ Repeat Until Wall
+                instructions.clearInstructionList();
+                levels.changeCurrentLevel(8);
+                instructions.addRepeatUntilWall();
+                LinkedList<Instruction> repeat = instructions.getLast().getRepeatInstructions();
+                instructions.addStep(repeat);
+                instructions.addPaintBlue(repeat);
                 instructions.addTurn();
-                instructions.addRepeatUntilColor();
-                LinkedList<Instruction> loop1 = instructions.getInstruction(3).getRepeatInstructions();
-                instructions.addStep(loop1);
-                instructions.addTurn(loop1);
-                instructions.addRepeatUntilColor(loop1);
-                instructions.addPaintGreen(loop1.getLast().getRepeatInstructions());
-                instructions.addRepeatUntilColor();
-                instructions.addStep(instructions.getLast().getRepeatInstructions());
-                instructions.addTurn();
+                instructions.addRepeatUntilWall();
+                LinkedList<Instruction> repeat1 = instructions.getLast().getRepeatInstructions();
+                instructions.addStep(repeat1);
+                instructions.addPaintRed();
+                check = result.execute();
+                System.out.println(check);
+
+                //TEST Level 11 W/ Nested Loops and Repeat Until Color
+                instructions.clearInstructionList();
+                levels.changeCurrentLevel(11);
+                instructions.addRepeatUntilColor(Color.RED);
+                LinkedList<Instruction> tillColor = instructions.getLast().getRepeatInstructions();
+                instructions.addRepeatUntilWall(tillColor);
+                LinkedList<Instruction> tillWall = tillColor.getLast().getRepeatInstructions();
+                instructions.addPaintRed(tillWall);
+                instructions.addStep(tillWall);
+                instructions.addTurn(tillColor);
+                check = result.execute();
+                System.out.println(check);
+                //ENDOFTEST
+
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
                 //System.out.println(e.getActionCommand());
+                LevelHelper levels = LevelHelper.getLevels();
                 if (e.getSource().getClass().getName().equals("javax.swing.JButton")) {
                         switch(((JButton) e.getSource()).getText()){
                                 case("Directions"):
@@ -237,6 +269,8 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         break;
                                 case("Play"):
                                         System.out.println("Play world");
+                                        Run check = new Run();
+                                        check.execute();
                                         // world.play();
                                         // or whatever it is supposed to be
                                         break;
@@ -246,72 +280,67 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         break;
                                 case("1"):
                                         System.out.println("Level 1");
-                                        App.level = 1;
+                                        levels.changeCurrentLevel(1);
                                         break;
                                 case("2"):
                                         System.out.println("Level 2");
-                                        App.level = 2;
+                                        levels.changeCurrentLevel(2);
                                         break;
                                 case("3"):
                                         System.out.println("Level 3");
-                                        App.level = 3;
+                                        levels.changeCurrentLevel(3);
                                         break;
                                 case("4"):
                                         System.out.println("Level 4");
-                                        App.level = 4;
+                                        levels.changeCurrentLevel(4);
                                         break;
                                 case("5"):
                                         System.out.println("Level 5");
-                                        App.level = 5;
+                                        levels.changeCurrentLevel(5);
                                         break;
                                 case("6"):
                                         System.out.println("Level 6");
-                                        App.level = 6;
+                                        levels.changeCurrentLevel(6);
                                         break;
                                 case("7"):
                                         System.out.println("Level 7");
-                                        App.level = 7;
+                                        levels.changeCurrentLevel(7);
                                         break;
                                 case("8"):
                                         System.out.println("Level 8");
-                                        App.level = 8;
+                                        levels.changeCurrentLevel(8);
                                         break;
                                 case("9"):
                                         System.out.println("Level 9");
-                                        App.level = 9;
+                                        levels.changeCurrentLevel(9);
                                         break;
                                 case("10"):
                                         System.out.println("Level 10");
-                                        App.level = 10;
+                                        levels.changeCurrentLevel(10);
                                         break;
                                 case("11"):
                                         System.out.println("Level 11");
-                                        App.level = 11;
+                                        levels.changeCurrentLevel(11);
                                         break;
                                 case("12"):
                                         System.out.println("Level 12");
-                                        App.level = 12;
+                                        levels.changeCurrentLevel(12);
                                         break;
                                 case("13"):
                                         System.out.println("Level 13");
-                                        App.level = 13;
+                                        levels.changeCurrentLevel(13);
                                         break;
                                 case("14"):
                                         System.out.println("Level 14");
-                                        App.level = 14;
+                                        levels.changeCurrentLevel(14);
                                         break;
                                 case("15"):
                                         System.out.println("Level 15");
-                                        App.level = 15;
+                                        levels.changeCurrentLevel(15);
                                         break;
                         }
-
-
-
                 } else if(e.getSource().getClass().getName().equals("javax.swing.JSlider")) {
-                        System.out.println("Slider was moved.");
-                }
-
+                        System.out.println("Slider was moved."); }
         }
 
         @Override

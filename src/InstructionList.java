@@ -14,9 +14,8 @@ public class InstructionList extends Observable{
         return _instance;
     }
 
-    public Instruction getInstruction(int pos){
-        return instructions.get(pos);
-    }
+    public Instruction getInstruction(int pos){ return instructions.get(pos); }
+    public LinkedList<Instruction> getInstructionLinkedList(){ return instructions; }
     public Instruction getLast(){return instructions.getLast();}
     public int getSize(){return instructions.size();}
 
@@ -62,8 +61,8 @@ public class InstructionList extends Observable{
         instructions.add(pos, new Instruction("Repeat Until Wall"));
     }
 
-    public void addRepeatUntilColor(){ instructions.add(new Instruction("Repeat Until Color")); }
-    public void addRepeatUntilColor(LinkedList<Instruction> instructionSet){instructionSet.add(new Instruction("Repeat Until Color"));}
+    public void addRepeatUntilColor(Color color){ instructions.add(new Instruction("Repeat Until Color", color)); }
+    public void addRepeatUntilColor(LinkedList<Instruction> instructionSet, Color color){instructionSet.add(new Instruction("Repeat Until Color", color));}
     public void insertRepeatUntilColor(int pos){
         instructions.add(pos, new Instruction("Repeat Until Wall"));
     }

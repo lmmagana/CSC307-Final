@@ -44,7 +44,7 @@ public class Level {
         this.spider.setX(spiderX); }
 
     public int getSpiderY() {
-        return this.getSpiderY(); }
+        return this.spider.getY(); }
 
     public void setSpiderY(int spiderY) {
         this.spider.setY(spiderY); }

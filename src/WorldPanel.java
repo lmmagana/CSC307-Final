@@ -15,7 +15,7 @@ public class WorldPanel extends JPanel implements ActionListener, ChangeListener
         int xOffset = 20;
         int yOffset = 10;
 
-        World world = new World(LevelHelper.getLevels().getLevel(1));
+        World world = new World(LevelHelper.getLevels().getLevel());
         world.setBounds(xOffset, yOffset, gridSize * cellSize, gridSize * cellSize);
         add(world);
     }
