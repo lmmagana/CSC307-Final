@@ -345,6 +345,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
 
         @Override
         public void stateChanged(ChangeEvent e) {
+                LevelHelper.getLevels().changeRunSpeed();
                 System.out.println("Slider was moved.");
         }
 }

@@ -67,7 +67,7 @@ public class InstructionList extends Observable{
         instructions.add(pos, new Instruction("Repeat Until Wall"));
     }
 
-    public void removeInstructions(LinkedList<Instruction> instructions, int pos){}
+    public void removeInstructionsBelow(int pos){}
 
     public void clearInstructionList(){instructions.clear(); }
     
