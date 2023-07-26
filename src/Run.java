@@ -14,7 +14,9 @@ public class Run implements Observer{
     private Color[] grid; //1D array for Grid
     private int speed;
 
-    public Run(){
+    public Run(){}
+
+    public boolean execute(){
         speed = LevelHelper.getLevels().getRunSpeed();
         lvl = LevelHelper.getLevels().getLevel();
         instructions = InstructionList.getInstructions();
@@ -23,9 +25,6 @@ public class Run implements Observer{
         spiderX = lvl.getSpiderX();
         spiderY = lvl.getSpiderY();
         spiderDirection = lvl.getSpiderDirection();
-    }
-
-    public boolean execute(){
         recursiveLoop(instructions.getInstructionLinkedList(), "Main List", null); //Populates grid with Colors
         return checkResult();
     }
@@ -114,12 +113,6 @@ public class Run implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         speed = LevelHelper.getLevels().getRunSpeed();
-        lvl = LevelHelper.getLevels().getLevel();
-        grid = new Color[lvl.getGridSize() * lvl.getGridSize()];
-        Arrays.fill(grid, Color.BLACK);
-        spiderX = lvl.getSpiderX();
-        spiderY = lvl.getSpiderY();
-        spiderDirection = lvl.getSpiderDirection();
     }
 }
 

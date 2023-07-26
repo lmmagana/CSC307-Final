@@ -17,8 +17,6 @@ public class LevelHelper extends Observable {
     public int getCurrentLevel(){return lvl;}
     public void changeCurrentLevel(int lvl){
         _instance.lvl = lvl;
-        setChanged();
-        notifyObservers();
     }
 
     public int getRunSpeed(){return speed;}
