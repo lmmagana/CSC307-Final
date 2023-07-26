@@ -10,7 +10,7 @@ public class LevelHelper extends Observable {
 
     private static LevelHelper _instance;
     private int lvl = 1;
-    private int speed = 255;
+    private int speed = 250;
     private ArrayList<Level> levels;
     private static final int[] gridSizes = {3, 4, 5, 6, 7};
 
@@ -23,7 +23,7 @@ public class LevelHelper extends Observable {
 
     public int getRunSpeed(){return speed;}
     public void changeRunSpeed(int runSpeed){
-        _instance.speed = runSpeed;
+        _instance.speed = runSpeed * 50;
         setChanged();
         notifyObservers();
     }

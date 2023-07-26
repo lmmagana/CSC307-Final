@@ -269,8 +269,8 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         break;
                                 case("Play"):
                                         System.out.println("Play world");
-                                        Run check = new Run();
-                                        check.execute();
+                                        Run play = new Run();
+                                        Boolean result = play.execute();
                                         // world.play();
                                         // or whatever it is supposed to be
                                         break;
@@ -345,7 +345,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
 
         @Override
         public void stateChanged(ChangeEvent e) {
-                LevelHelper.getLevels().changeRunSpeed();
-                System.out.println("Slider was moved.");
+                System.out.println("Slider Value: " + ((JSlider) e.getSource()).getValue());
+                LevelHelper.getLevels().changeRunSpeed(((JSlider) e.getSource()).getValue());
         }
 }
