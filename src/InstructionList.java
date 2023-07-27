@@ -67,7 +67,11 @@ public class InstructionList extends Observable{
         instructions.add(pos, new Instruction("Repeat Until Wall"));
     }
 
-    public void removeInstructionsBelow(int pos){}
+    public void removeInstruction(int pos){ instructions.remove(pos); }
+
+    public void removeInstructionsBelow(int pos){
+        if (getSize() > pos) { instructions.subList(pos, getSize()).clear(); }
+    }
 
     public void clearInstructionList(){instructions.clear(); }
     

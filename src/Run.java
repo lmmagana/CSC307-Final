@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Run implements Observer{
+public class Run extends Observable implements Observer{
 
     private static Run _instance;
     private int spiderX;
@@ -62,8 +62,9 @@ public class Run implements Observer{
                     case EAST -> spiderX++;
                     case SOUTH -> spiderY++;
                     case WEST -> spiderX--;
-                    //VISUALLY MOVE SPIDER
                 }
+                setChanged();
+                notifyObservers();
                 break;
             case "Turn":
                 switch (spiderDirection){
@@ -73,22 +74,32 @@ public class Run implements Observer{
                     case NORTH -> spiderDirection = Spider.Direction.EAST;
                     //VISUALLY UPDATE SPIDER DIRECTION
                 }
+                setChanged();
+                notifyObservers();
                 break;
             case "Paint Red":
                 setgridSpaceColor(spiderX, spiderY, Color.RED);
                 //VISUALLY UPDATE GRID SPACE COLOR
+                setChanged();
+                notifyObservers();
                 break;
             case "Paint Blue":
                 setgridSpaceColor(spiderX, spiderY, Color.BLUE);
                 //VISUALLY UPDATE GRID SPACE COLOR
+                setChanged();
+                notifyObservers();
                 break;
             case "Paint Green":
                 setgridSpaceColor(spiderX, spiderY, Color.GREEN);
                 //VISUALLY UPDATE GRID SPACE COLOR
+                setChanged();
+                notifyObservers();
                 break;
             case "Paint Black":
                 setgridSpaceColor(spiderX, spiderY, Color.BLACK);
                 //VISUALLY UPDATE GRID SPACE COLOR
+                setChanged();
+                notifyObservers();
                 break;
         }
     }
@@ -159,6 +170,13 @@ public class Run implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         speed = LevelHelper.getLevels().getRunSpeed();
+        lvl = LevelHelper.getLevels().getLevel();
+        instructions = InstructionList.getInstructions();
+        grid = new Color[lvl.getGridSize() * lvl.getGridSize()];
+        Arrays.fill(grid, Color.BLACK);
+        spiderX = lvl.getSpiderX();
+        spiderY = lvl.getSpiderY();
+        spiderDirection = lvl.getSpiderDirection();
     }
 }
 
