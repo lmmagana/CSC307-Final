@@ -21,7 +21,9 @@ public class App extends JFrame implements ActionListener, ChangeListener {
 
                 worldPanel = new WorldPanel();
                 LevelHelper levels = LevelHelper.getLevels(); //Singleton of levels
-                levels.addObserver(worldPanel);
+                Run execute = Run.getInstance(); //Singleton of run instructions
+                levels.addObserver(worldPanel); //worldPanel redraws when level changes
+                execute.addObserver(worldPanel); //worldPanel redraws during execution
 
                 // upper panel
                 JPanel upperPanel = new JPanel();
@@ -185,7 +187,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 LevelHelper levels = LevelHelper.getLevels(); //Singleton of levels
                 InstructionList instructions = InstructionList.getInstructions(); //Singleton of Instructions
                 Run result = Run.getInstance(); //Singleton of Run
-                levels.addObserver(result); //Observer updates level info
+                levels.addObserver(result); //Observer updates level info within execution when level changes
         }
 
         @Override
@@ -260,6 +262,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                 case("Restart Level"):
                                         System.out.println("Reset Instruction List");
                                         InstructionList.getInstructions().clearInstructionList();
+                                        levels.changeCurrentLevel(levels.getCurrentLevel());
                                         break;
                                 case("1"):
                                         System.out.println("Level 1");

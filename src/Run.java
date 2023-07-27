@@ -32,6 +32,10 @@ public class Run extends Observable implements Observer{
         spiderX = lvl.getSpiderX();
         spiderY = lvl.getSpiderY();
         spiderDirection = lvl.getSpiderDirection();
+
+        setChanged();
+        notifyObservers();
+
         recursiveLoop(instructions.getInstructionLinkedList(), "Main List", null); //Populates grid with Colors
         Boolean result = checkResult();
         promptResult(result);
