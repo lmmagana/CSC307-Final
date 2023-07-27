@@ -173,10 +173,18 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 app.setResizable(false);
                 LevelHelper levels = LevelHelper.getLevels(); //Singleton of levels
                 InstructionList instructions = InstructionList.getInstructions(); //Singleton of Instructions
-                Run result = new Run();
+                Run result = Run.getInstance(); //Singleton of Run
                 levels.addObserver(result); //Observer updates level info
 
+                //Test Wall Collision
+                instructions.addRepeatUntilColor(Color.RED);
+                LinkedList<Instruction> tillC = instructions.getLast().getRepeatInstructions();
+                instructions.addStep(tillC);
+                Boolean check = result.execute();
+                System.out.println(check);
+
                 //Test Level 1
+                instructions.clearInstructionList();
                 instructions.addStep();
                 instructions.addPaintGreen();
                 instructions.addStep();
@@ -185,7 +193,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 instructions.addStep();
                 instructions.addStep();
                 instructions.addPaintBlue();
-                Boolean check = result.execute();
+                check = result.execute();
                 System.out.println(check);
 
                 //TEST Level 8 W/ Repeat Until Wall
@@ -269,7 +277,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         break;
                                 case("Play"):
                                         System.out.println("Play world");
-                                        Run play = new Run();
+                                        Run play = Run.getInstance();
                                         Boolean result = play.execute();
                                         // world.play();
                                         // or whatever it is supposed to be
