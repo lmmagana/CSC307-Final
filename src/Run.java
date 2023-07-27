@@ -151,6 +151,11 @@ public class Run implements Observer{
     private Color getGridSpaceColor(int x, int y){
         return grid[(x - 1) + (y - 1) * lvl.getGridSize()]; }
 
+    public int getSpiderX() { return spiderX; }
+    public int getSpiderY() { return spiderY; }
+    public Spider.Direction getSpiderDirection() { return spiderDirection; }
+    public Color[] getGrid() { return grid; }
+
     @Override
     public void update(Observable o, Object arg) {
         speed = LevelHelper.getLevels().getRunSpeed();

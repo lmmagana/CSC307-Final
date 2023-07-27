@@ -16,6 +16,7 @@ public class LevelHelper extends Observable {
 
     public int getCurrentLevel(){return lvl;}
     public void changeCurrentLevel(int lvl){
+        regenerateLevel(lvl);
         _instance.lvl = lvl;
         setChanged();
         notifyObservers();
@@ -144,7 +145,7 @@ public class LevelHelper extends Observable {
         return levels.get(lvl - 1);
     }
 
-    public void regenerateLevel(int level){
+    private void regenerateLevel(int level){
         switch(level){
             case 7:
                 level7();

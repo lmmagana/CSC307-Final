@@ -9,13 +9,15 @@ import java.util.LinkedList;
 public class App extends JFrame implements ActionListener, ChangeListener {
 
         private ConnectHelper c;
+        private WorldPanel worldPanel;
 
         public App() {
                 super("Spider World");
                 c = new ConnectHelper();
-                //l = new LevelHelper();
-                //InstructionList.getInstance().addObserver(c);
-                //InstructionList.getInstance().addObserver(l);
+
+                worldPanel = new WorldPanel();
+                LevelHelper levels = LevelHelper.getLevels(); //Singleton of levels
+                levels.addObserver(worldPanel);
 
                 // upper panel
                 JPanel upperPanel = new JPanel();
@@ -126,7 +128,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 blackButton.addActionListener(this);
 
                 // panel for the world
-                WorldPanel worldPanel = new WorldPanel();
+                //worldPanel = new WorldPanel();
                 worldPanel.setBackground(Color.WHITE);
                 worldPanel.setBounds(0, 100, 500, 750);
                 add(worldPanel);
@@ -180,6 +182,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 InstructionList instructions = InstructionList.getInstructions(); //Singleton of Instructions
                 Run result = Run.getInstance(); //Singleton of Run
                 levels.addObserver(result); //Observer updates level info
+
         }
 
         @Override

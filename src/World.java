@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Observable;
+import java.util.Observer;
 
 public class World extends JPanel {
 
@@ -18,7 +20,7 @@ public class World extends JPanel {
         this.cells = new Cell[size][size];
         initializeGrid();
         setBackground(Color.BLACK);
-        spider = new Spider(1, 3, Spider.Direction.NORTH);
+        spider = new Spider(lvl.getSpiderX(), lvl.getSpiderY(), lvl.getSpiderDirection());
     }
     private void initializeGrid() {
         for (int i = 0; i < size; i++) {
@@ -43,6 +45,14 @@ public class World extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        Level lvl = LevelHelper.getLevels().getLevel();
+        this.size = lvl.getGridSize();
+        this.cells = new Cell[size][size];
+        initializeGrid();
+        setBackground(Color.BLACK);
+        spider = new Spider(lvl.getSpiderX(), lvl.getSpiderY(), lvl.getSpiderDirection());
+
         drawGrid(g);
     }
     private void drawSpider(Graphics g, int x, int y, Spider.Direction direction) {
@@ -95,14 +105,15 @@ public class World extends JPanel {
                     g.fillRect(x + 1, y + 1, cellSize - 1, cellSize - 1);
                 }
 
-                if (row == 1 && col == 1) {
-                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.RED);
-                } else if (row == 2 && col == 1) {
-                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.GREEN);
-                } else if (row == 1 && col == 3) {
-                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.BLUE);
-                }
-                if (row == spider.getY() && col == spider.getX()) {
+//                if (row == 1 && col == 1) {
+//                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.RED);
+//                } else if (row == 2 && col == 1) {
+//                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.GREEN);
+//                } else if (row == 1 && col == 3) {
+//                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.BLUE);
+//                }
+
+                if (row == spider.getY() - 1 && col == spider.getX() - 1) {
                     drawSpider(g, x + cellSize / 2, y + cellSize / 2, spider.getDirection());
                 }
                 g.setColor(Color.WHITE); // Reset the color for the next grid cell
