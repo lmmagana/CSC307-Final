@@ -84,10 +84,33 @@ class DraggableLabel extends JLabel implements MouseListener {
                 }
             }
         }
+
         xpos = getLocation().x;
         ypos = getLocation().y;
         System.out.println(xpos + " " + ypos);
-        parentPanel.addDraggedLabel(this);
+
+        if (initialBlock){
+            parentPanel.addDraggedLabel(this);
+        }
+
+        if (!initialBlock) {
+            Point trashIconPosition = new Point(35, 575);
+            int trashIconWidth = 75;
+            int trashIconHeight = 75;
+
+            if (center.x >= trashIconPosition.x && center.x <= trashIconPosition.x + trashIconWidth &&
+                center.y >= trashIconPosition.y && center.y <= trashIconPosition.y + trashIconHeight) {
+                // Label dropped on the trash icon
+                System.out.println("Label dropped on the trash icon.");
+                // Perform any other actions you want when the label is dropped on the trash icon.
+                InstructionList.getInstructions().removeInstructionsBelow(InstructionList.getInstructions().getSize() - 1);
+                parentPanel.popDraggedLabel();
+                parentPanel.remove(this);
+                parentPanel.repaint();
+            }
+        }
+
+
         if (initialBlock) {
             switch (getText()) {
                 case ("Step"):
@@ -140,16 +163,39 @@ class DraggablePanel extends JPanel {
         draggedLabels.add(label);
     }
 
-
     public List<DraggableLabel> getDraggedLabels() {
         return draggedLabels;
     }
+
+    public void popDraggedLabel(){
+        for (DraggableLabel str : draggedLabels)
+        {
+            System.out.print(str.getXPos() + " and ");
+            System.out.println(str.getYPos());
+        }
+        draggedLabels.remove(draggedLabels.size() - 1);
+        System.out.println("Removed label from draggedLabels");
+        for (DraggableLabel str : draggedLabels)
+        {
+            System.out.print(str.getXPos() + " and ");
+            System.out.println(str.getYPos());
+        }
+    }
+
+    public void popDraggableLabel(){
+
+    }
+
+
+
+
 
 }
 
 public class WorkArea extends JPanel{
 
     private DraggablePanel dragPanel = new DraggablePanel();
+    private JLabel trashLabel;
     public WorkArea() {
 
         // Visuals initialization
@@ -161,12 +207,26 @@ public class WorkArea extends JPanel{
         dragPanel.addDraggableLabel("Paint Blue", 500, 175, true);
         dragPanel.addDraggableLabel("Paint Green", 500, 225, true);
         dragPanel.addDraggableLabel("Paint Black", 500, 275, true);
+
+        ImageIcon trashIcon = new ImageIcon("./images/trash-bin-3.png");
+        trashLabel = new JLabel(trashIcon);
+        trashLabel.setBounds(35, 575, 75, 75); // Set the size of the label here
+        dragPanel.add(trashLabel);
+
         add(dragPanel);
     }
+
+    public JLabel getTrashLabel(){ return trashLabel; }
+
 
     public void addFromButton(String text, int x, int y){
 
         List<DraggableLabel> list = dragPanel.getDraggedLabels();
+        for (DraggableLabel str : list)
+        {
+            System.out.print(str.getXPos() + " and ");
+            System.out.println(str.getYPos());
+        }
 
         if (list.size() != 0) {
             int xpos = list.get(list.size() - 1).getXPos();
