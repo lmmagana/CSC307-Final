@@ -180,56 +180,6 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 InstructionList instructions = InstructionList.getInstructions(); //Singleton of Instructions
                 Run result = Run.getInstance(); //Singleton of Run
                 levels.addObserver(result); //Observer updates level info
-
-                //Test Wall Collision
-                instructions.addRepeatUntilColor(Color.RED);
-                LinkedList<Instruction> tillC = instructions.getLast().getRepeatInstructions();
-                instructions.addStep(tillC);
-                Boolean check = result.execute();
-                System.out.println(check);
-
-                //Test Level 1
-                instructions.clearInstructionList();
-                instructions.addStep();
-                instructions.addPaintGreen();
-                instructions.addStep();
-                instructions.addPaintRed();
-                instructions.addTurn();
-                instructions.addStep();
-                instructions.addStep();
-                instructions.addPaintBlue();
-                check = result.execute();
-                System.out.println(check);
-
-                //TEST Level 8 W/ Repeat Until Wall
-                instructions.clearInstructionList();
-                levels.changeCurrentLevel(8);
-                instructions.addRepeatUntilWall();
-                LinkedList<Instruction> repeat = instructions.getLast().getRepeatInstructions();
-                instructions.addStep(repeat);
-                instructions.addPaintBlue(repeat);
-                instructions.addTurn();
-                instructions.addRepeatUntilWall();
-                LinkedList<Instruction> repeat1 = instructions.getLast().getRepeatInstructions();
-                instructions.addStep(repeat1);
-                instructions.addPaintRed();
-                check = result.execute();
-                System.out.println(check);
-
-                //TEST Level 11 W/ Nested Loops and Repeat Until Color
-                instructions.clearInstructionList();
-                levels.changeCurrentLevel(11);
-                instructions.addRepeatUntilColor(Color.RED);
-                LinkedList<Instruction> tillColor = instructions.getLast().getRepeatInstructions();
-                instructions.addRepeatUntilWall(tillColor);
-                LinkedList<Instruction> tillWall = tillColor.getLast().getRepeatInstructions();
-                instructions.addPaintRed(tillWall);
-                instructions.addStep(tillWall);
-                instructions.addTurn(tillColor);
-                check = result.execute();
-                System.out.println(check);
-                //ENDOFTEST
-
         }
 
         @Override
@@ -282,13 +232,14 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         break;
                                 case("Play"):
                                         System.out.println("Play world");
+                                        System.out.println(InstructionList.getInstructions());
                                         Run play = Run.getInstance();
                                         Boolean result = play.execute();
                                         // world.play();
                                         // or whatever it is supposed to be
                                         break;
                                 case("Restart Level"):
-                                        System.out.println("Restart Level");
+                                        System.out.println("Reset Instruction List");
                                         InstructionList.getInstructions().clearInstructionList();
                                         break;
                                 case("1"):

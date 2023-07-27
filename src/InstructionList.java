@@ -81,7 +81,14 @@ public class InstructionList extends Observable{
         }
         throw new RuntimeException("No loop to add Instruction To");
     }
-    
+    @Override
+    public String toString() {
+        String[] instructionlist = new String[_instance.getSize()];
+        for(int i = 0; i < _instance.getSize(); i ++){
+            instructionlist[i] = _instance.getInstruction(i).toString();
+        }
+        return "{" + String.join(", ", instructionlist) + "}";
+    }
 
     private void insertHelper(int pos, int currentInx, LinkedList<Instruction> instList, Instruction instruction) {
         int indxWithinLoop = 0;
