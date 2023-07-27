@@ -23,7 +23,7 @@ public class LevelHelper extends Observable {
 
     public int getRunSpeed(){return speed;}
     public void changeRunSpeed(int runSpeed){
-        _instance.speed = runSpeed * 50;
+        _instance.speed = (10 - runSpeed) * 50;
         setChanged();
         notifyObservers();
     }
