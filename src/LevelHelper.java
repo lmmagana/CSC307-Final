@@ -16,6 +16,7 @@ public class LevelHelper extends Observable {
 
     public int getCurrentLevel(){return lvl;}
     public void changeCurrentLevel(int lvl){
+        if(Run.getInstance().flag) return;
         InstructionList.getInstructions().clearInstructionList();
         regenerateLevel(lvl);
         _instance.lvl = lvl;
