@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -104,7 +105,6 @@ public class World extends JPanel {
                     g.setColor(Color.BLACK);
                     g.fillRect(x + 1, y + 1, cellSize - 1, cellSize - 1);
                 }
-
 //                if (row == 1 && col == 1) {
 //                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.RED);
 //                } else if (row == 2 && col == 1) {
@@ -113,12 +113,21 @@ public class World extends JPanel {
 //                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.BLUE);
 //                }
 
-                if (row == spider.getY() - 1 && col == spider.getX() - 1) {
-                    drawSpider(g, x + cellSize / 2, y + cellSize / 2, spider.getDirection());
-                }
+//                if (row == spider.getY() - 1 && col == spider.getX() - 1) {
+//                    drawSpider(g, x + cellSize / 2, y + cellSize / 2, spider.getDirection());
+//                }
                 g.setColor(Color.WHITE); // Reset the color for the next grid cell
             }
         }
+        ArrayList<Diamond> dimonds = LevelHelper.getLevels().getLevel().getDiamonds();
+        for (Diamond dimond: dimonds){
+            int x = ((dimond.getX() - 1) * cellSize) + cellSize/ 2;
+            int y = ((dimond.getY() - 1) * cellSize) + cellSize/ 2;
+            drawDiamond(g, x, y, dimond.getColor());
+        }
+        int x = ((spider.getX() - 1) * cellSize) + cellSize/ 2;
+        int y = ((spider.getY() - 1) * cellSize) + cellSize/ 2;
+        drawSpider(g, x, y, spider.getDirection());
     }
 
     private void drawDiamond(Graphics g, int x, int y, Color color) {
