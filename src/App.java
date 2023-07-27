@@ -128,13 +128,13 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 // panel for the world
                 WorldPanel worldPanel = new WorldPanel();
                 worldPanel.setBackground(Color.WHITE);
-                worldPanel.setBounds(0, 100, 375, 750);
+                worldPanel.setBounds(0, 100, 500, 750);
                 add(worldPanel);
 
                 // play and speed buttons
                 JPanel worldPlaySpeedPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
                 worldPlaySpeedPanel.setBackground(Color.WHITE);
-                worldPlaySpeedPanel.setBounds(375, 100, 375, 750);
+                worldPlaySpeedPanel.setBounds(500, 100, 375, 750);
                 add(worldPlaySpeedPanel);
 
                 JButton playButton = new JButton("Play");
@@ -149,7 +149,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 // right side
                 // workArea
                 WorkArea workAreaPanel = new WorkArea();
-                workAreaPanel.setBounds(750, 100, 750, 750);
+                workAreaPanel.setBounds(875, 100, 625, 750);
                 add(workAreaPanel);
 
                 // host the restart button

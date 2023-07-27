@@ -125,12 +125,12 @@ public class WorkArea extends JPanel{
         // Visuals initialization
         setLayout(new BorderLayout());
         DraggablePanel dragPanel = new DraggablePanel();
-        dragPanel.addDraggableLabel("Step", 650, 25); // Set initial position
-        dragPanel.addDraggableLabel("Turn", 650, 75);
-        dragPanel.addDraggableLabel("Paint Red", 650, 125);
-        dragPanel.addDraggableLabel("Paint Blue", 650, 175);
-        dragPanel.addDraggableLabel("Paint Green", 650, 225);
-        dragPanel.addDraggableLabel("Paint Black", 650, 275);
+        dragPanel.addDraggableLabel("Step", 525, 25); // Set initial position
+        dragPanel.addDraggableLabel("Turn", 525, 75);
+        dragPanel.addDraggableLabel("Paint Red", 525, 125);
+        dragPanel.addDraggableLabel("Paint Blue", 525, 175);
+        dragPanel.addDraggableLabel("Paint Green", 525, 225);
+        dragPanel.addDraggableLabel("Paint Black", 525, 275);
         add(dragPanel);
     }
 
