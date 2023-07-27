@@ -8,7 +8,7 @@ import java.awt.image.ImageObserver;
 import java.util.Observable;
 import java.util.Observer;
 
-public class WorldPanel extends JPanel implements ActionListener, ChangeListener, Observer {
+public class WorldPanel extends JPanel implements Observer {
 
     private int gridSize;
     private final int cellSize = 60;
@@ -24,26 +24,18 @@ public class WorldPanel extends JPanel implements ActionListener, ChangeListener
         world.setBounds(xOffset, yOffset, gridSize * cellSize, gridSize * cellSize);
         add(world);
     }
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // Handle button clicks or other actions if needed
-    }
-
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        // Handle state changes of components if needed
-    }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         gridSize = LevelHelper.getLevels().getLevel().getGridSize();
         world.setBounds(xOffset, yOffset, gridSize * cellSize, gridSize * cellSize);
-        System.out.println(LevelHelper.getLevels().getLevel().getGridSize());
     }
 
     @Override
     public void update(Observable o, Object arg) {
+        System.out.println("WorldPanel Observer Notified");
+        //paintComponent(this.getGraphics());
         repaint();
     }
 }

@@ -15,7 +15,7 @@ public class World extends JPanel {
     private int size;
     private int cellSize = 60;
     private Spider spider;
-    
+
     public World(Level lvl) {
         this.size = lvl.getGridSize();
         this.cells = new Cell[size][size];
@@ -23,6 +23,7 @@ public class World extends JPanel {
         setBackground(Color.BLACK);
         spider = new Spider(lvl.getSpiderX(), lvl.getSpiderY(), lvl.getSpiderDirection());
     }
+
     private void initializeGrid() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -48,14 +49,17 @@ public class World extends JPanel {
         super.paintComponent(g);
 
         Level lvl = LevelHelper.getLevels().getLevel();
+        Run run = Run.getInstance();
         this.size = lvl.getGridSize();
         this.cells = new Cell[size][size];
         initializeGrid();
         setBackground(Color.BLACK);
-        spider = new Spider(lvl.getSpiderX(), lvl.getSpiderY(), lvl.getSpiderDirection());
+        if(run.getSpiderDirection() == null) spider = new Spider(lvl.getSpiderX(), lvl.getSpiderY(), lvl.getSpiderDirection());
+        else{ spider = new Spider(run.getSpiderX(), run.getSpiderY(), run.getSpiderDirection()); }
 
         drawGrid(g);
     }
+
     private void drawSpider(Graphics g, int x, int y, Spider.Direction direction) {
         try {
             String spiderImageFile;
@@ -76,7 +80,7 @@ public class World extends JPanel {
                     return;
             }
 
-             //Load the spider image from the file
+            //Load the spider image from the file
 //            InputStream is = getClass().getResourceAsStream(spiderImageFile);
 //            BufferedImage spiderImage = ImageIO.read(is);
             BufferedImage spiderImage = ImageIO.read(new File(spiderImageFile));
@@ -92,7 +96,11 @@ public class World extends JPanel {
             e.printStackTrace();
         }
     }
+
     private void drawGrid(Graphics g) {
+
+        drawCells(g);
+
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 int x = col * cellSize;
@@ -109,13 +117,14 @@ public class World extends JPanel {
             }
         }
         ArrayList<Diamond> dimonds = LevelHelper.getLevels().getLevel().getDiamonds();
-        for (Diamond dimond: dimonds){
-            int x = ((dimond.getX() - 1) * cellSize) + cellSize/ 2;
-            int y = ((dimond.getY() - 1) * cellSize) + cellSize/ 2;
+        for (Diamond dimond : dimonds) {
+            int x = ((dimond.getX() - 1) * cellSize) + cellSize / 2;
+            int y = ((dimond.getY() - 1) * cellSize) + cellSize / 2;
             drawDiamond(g, x, y, dimond.getColor());
         }
-        int x = ((spider.getX() - 1) * cellSize) + cellSize/ 2;
-        int y = ((spider.getY() - 1) * cellSize) + cellSize/ 2;
+
+        int x = ((spider.getX() - 1) * cellSize) + cellSize / 2;
+        int y = ((spider.getY() - 1) * cellSize) + cellSize / 2;
         drawSpider(g, x, y, spider.getDirection());
     }
 
@@ -126,6 +135,19 @@ public class World extends JPanel {
         g.fillPolygon(xPoints, yPoints, 4);
     }
 
+    private void drawCells(Graphics g){
+        Color[] colors = Run.getInstance().getGrid();
+        if(colors == null) return;
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                int x = col * cellSize;
+                int y = row * cellSize;
+                Color cellColor = colors[row * size + col];
+                g.setColor(cellColor);
+                g.fillRect(x, y, cellSize, cellSize);
+            }
+        }
+    }
 
     @Override
     public String toString() {
