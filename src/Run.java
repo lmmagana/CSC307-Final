@@ -41,8 +41,6 @@ public class Run extends Observable implements Observer{
             Boolean result = checkResult();
             promptResult(result);
         }).start();
-
-        //return result;
     }
 
     private void recursiveLoop(LinkedList<Instruction> instructionList, String flg, Color clr){

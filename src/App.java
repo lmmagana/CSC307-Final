@@ -207,57 +207,42 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         InstructionList.getInstructions().addStep();
                                         workAreaPanel.addFromButton("Step", 200, 25);
                                         workAreaPanel.repaint();
-
-                                        // world.step();
-                                        // or whatever it is supposed to be
                                         break;
                                 case("Turn"):
                                         System.out.println("Turn spider");
                                         InstructionList.getInstructions().addTurn();
                                         workAreaPanel.addFromButton("Turn", 200, 75);
                                         workAreaPanel.repaint();
-                                        // world.red();
-                                        // or whatever it is supposed to be
                                         break;
                                 case("Red"):
                                         System.out.println("Paint red");
                                         InstructionList.getInstructions().addPaintRed();
                                         workAreaPanel.addFromButton("Paint Red", 200, 125);
                                         workAreaPanel.repaint();
-                                        // world.red();
-                                        // or whatever it is supposed to be
                                         break;
                                 case("Blue"):
                                         System.out.println("Paint Blue");
                                         InstructionList.getInstructions().addPaintBlue();
                                         workAreaPanel.addFromButton("Paint BLue", 200, 175);
                                         workAreaPanel.repaint();
-                                        // world.blue();
-                                        // or whatever it is supposed to be
                                         break;
                                 case("Green"):
                                         System.out.println("Paint Green");
                                         InstructionList.getInstructions().addPaintGreen();
                                         workAreaPanel.addFromButton("Paint Green", 200, 225);
                                         workAreaPanel.repaint();
-                                        // world.green();
-                                        // or whatever it is supposed to be
                                         break;
                                 case("Black"):
                                         System.out.println("Paint Black");
                                         InstructionList.getInstructions().addPaintBlack();
                                         workAreaPanel.addFromButton("Paint Black", 200, 275);
                                         workAreaPanel.repaint();
-                                        // world.black();
-                                        // or whatever it is supposed to be
                                         break;
                                 case("Play"):
                                         System.out.println("Play world");
                                         System.out.println(InstructionList.getInstructions());
                                         Run play = Run.getInstance();
                                         play.execute();
-                                        // world.play();
-                                        // or whatever it is supposed to be
                                         break;
                                 case("Restart Level"):
                                         System.out.println("Reset Instruction List");
