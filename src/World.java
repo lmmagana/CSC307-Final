@@ -105,17 +105,6 @@ public class World extends JPanel {
                     g.setColor(Color.BLACK);
                     g.fillRect(x + 1, y + 1, cellSize - 1, cellSize - 1);
                 }
-//                if (row == 1 && col == 1) {
-//                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.RED);
-//                } else if (row == 2 && col == 1) {
-//                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.GREEN);
-//                } else if (row == 1 && col == 3) {
-//                    drawDiamond(g, x + cellSize / 2, y + cellSize / 2, Color.BLUE);
-//                }
-
-//                if (row == spider.getY() - 1 && col == spider.getX() - 1) {
-//                    drawSpider(g, x + cellSize / 2, y + cellSize / 2, spider.getDirection());
-//                }
                 g.setColor(Color.WHITE); // Reset the color for the next grid cell
             }
         }
@@ -132,8 +121,8 @@ public class World extends JPanel {
 
     private void drawDiamond(Graphics g, int x, int y, Color color) {
         g.setColor(color);
-        int[] xPoints = {x, x + 5, x, x - 5}; // x-coordinates for diamond
-        int[] yPoints = {y - 5, y, y + 5, y}; // y-coordinates for diamond
+        int[] xPoints = {x, x + 7, x, x - 7}; // x-coordinates for diamond
+        int[] yPoints = {y - 9, y, y + 9, y}; // y-coordinates for diamond
         g.fillPolygon(xPoints, yPoints, 4);
     }
 
