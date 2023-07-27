@@ -255,7 +255,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         System.out.println("Play world");
                                         System.out.println(InstructionList.getInstructions());
                                         Run play = Run.getInstance();
-                                        Boolean result = play.execute();
+                                        play.execute();
                                         // world.play();
                                         // or whatever it is supposed to be
                                         break;

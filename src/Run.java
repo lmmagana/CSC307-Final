@@ -23,7 +23,7 @@ public class Run extends Observable implements Observer{
         return _instance;
     }
 
-    public boolean execute(){
+    public void execute(){
         speed = LevelHelper.getLevels().getRunSpeed();
         lvl = LevelHelper.getLevels().getLevel();
         instructions = InstructionList.getInstructions();
@@ -36,10 +36,13 @@ public class Run extends Observable implements Observer{
         setChanged();
         notifyObservers();
 
-        recursiveLoop(instructions.getInstructionLinkedList(), "Main List", null); //Populates grid with Colors
-        Boolean result = checkResult();
-        promptResult(result);
-        return result;
+        new Thread(() -> {
+            recursiveLoop(instructions.getInstructionLinkedList(), "Main List", null); //Populates grid with Colors
+            Boolean result = checkResult();
+            promptResult(result);
+        }).start();
+
+        //return result;
     }
 
     private void recursiveLoop(LinkedList<Instruction> instructionList, String flg, Color clr){
