@@ -7,6 +7,7 @@ import java.util.Observer;
 
 public class Run extends Observable implements Observer{
 
+    public boolean flag = false;
     private static Run _instance;
     private int spiderX;
     private int spiderY;
@@ -37,9 +38,11 @@ public class Run extends Observable implements Observer{
         notifyObservers();
 
         new Thread(() -> {
+            flag = true;
             recursiveLoop(instructions.getInstructionLinkedList(), "Main List", null); //Populates grid with Colors
             Boolean result = checkResult();
             promptResult(result);
+            flag = false;
         }).start();
     }
 
@@ -174,14 +177,17 @@ public class Run extends Observable implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        speed = LevelHelper.getLevels().getRunSpeed();
-        lvl = LevelHelper.getLevels().getLevel();
-        instructions = InstructionList.getInstructions();
-        grid = new Color[lvl.getGridSize() * lvl.getGridSize()];
-        Arrays.fill(grid, Color.BLACK);
-        spiderX = lvl.getSpiderX();
-        spiderY = lvl.getSpiderY();
-        spiderDirection = lvl.getSpiderDirection();
+        if(flag) {
+            speed = LevelHelper.getLevels().getRunSpeed();
+        } else {
+            lvl = LevelHelper.getLevels().getLevel();
+            instructions = InstructionList.getInstructions();
+            grid = new Color[lvl.getGridSize() * lvl.getGridSize()];
+            Arrays.fill(grid, Color.BLACK);
+            spiderX = lvl.getSpiderX();
+            spiderY = lvl.getSpiderY();
+            spiderDirection = lvl.getSpiderDirection();
+        }
     }
 }
 
