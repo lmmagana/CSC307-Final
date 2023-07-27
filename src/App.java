@@ -141,6 +141,11 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 worldPlaySpeedPanel.add(playButton);
 
                 JSlider speedSlider = new JSlider(1, 10);
+                speedSlider.setBorder(BorderFactory.createTitledBorder("Speed Slider"));
+                speedSlider.setMajorTickSpacing(1);
+                speedSlider.setMinorTickSpacing(1);
+                speedSlider.setPaintTicks(true);
+                speedSlider.setPaintLabels(true);
                 worldPlaySpeedPanel.add(speedSlider);
 
                 playButton.addActionListener(this);
