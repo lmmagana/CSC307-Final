@@ -68,10 +68,11 @@ public class InstructionList extends Observable{
     }
 
     public void removeInstruction(int pos){ instructions.remove(pos); }
+    public void removeInstruction(LinkedList<Instruction> instructionSet, int pos){ instructionSet.remove(pos); }
 
-    public void removeInstructionsBelow(int pos){
-        if (getSize() > pos) { instructions.subList(pos, getSize()).clear(); }
-    }
+    public void removeInstructionsBelow(int pos){ if (getSize() > pos) instructions.subList(pos, getSize()).clear(); }
+    public void removeInstructionsBelow(LinkedList<Instruction> instructionSet, int pos){
+        if (getSize() > pos) instructionSet.subList(pos, getSize()).clear(); }
 
     public void clearInstructionList(){instructions.clear(); }
     

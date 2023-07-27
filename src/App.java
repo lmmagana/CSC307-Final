@@ -186,7 +186,6 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 InstructionList instructions = InstructionList.getInstructions(); //Singleton of Instructions
                 Run result = Run.getInstance(); //Singleton of Run
                 levels.addObserver(result); //Observer updates level info
-
         }
 
         @Override
