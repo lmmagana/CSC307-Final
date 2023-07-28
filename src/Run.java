@@ -46,6 +46,25 @@ public class Run extends Observable implements Observer{
         }).start();
     }
 
+    public void runOneInstruction(Instruction inst, int checkFirst){
+        if(checkFirst == 1) {
+            lvl = LevelHelper.getLevels().getLevel();
+            instructions = InstructionList.getInstructions();
+            grid = new Color[lvl.getGridSize() * lvl.getGridSize()];
+            Arrays.fill(grid, Color.BLACK);
+            spiderX = lvl.getSpiderX();
+            spiderY = lvl.getSpiderY();
+            spiderDirection = lvl.getSpiderDirection();
+        }
+        if(inst.getInstruction().equals("Step") && promptHitWall());
+        else computeInstruction(inst);
+
+        Boolean res = checkResult();
+        if(res){
+            promptResult(res);
+        }
+    }
+
     private void recursiveLoop(LinkedList<Instruction> instructionList, String flg, Color clr){
         for(int i = 0; i < instructionList.size(); i++){
             Instruction inst = instructionList.get(i);
