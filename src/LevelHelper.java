@@ -12,7 +12,7 @@ public class LevelHelper extends Observable {
     private int lvl = 1;
     private int speed = 250;
     private ArrayList<Level> levels;
-    private static final int[] gridSizes = {3, 4, 5, 6, 7};
+    private static final int[] gridSizes = {3, 4, 5, 6, 7, 8};
 
     public int getCurrentLevel(){return lvl;}
     public void changeCurrentLevel(int lvl){
