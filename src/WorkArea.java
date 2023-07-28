@@ -139,8 +139,6 @@ class DraggableLabel extends JLabel implements MouseListener {
 
 }
 
-
-
 class DraggablePanel extends JPanel {
     private List<DraggableLabel> draggedLabels = new ArrayList<>();
     DraggablePanel() {
@@ -156,6 +154,12 @@ class DraggablePanel extends JPanel {
         label.setXPos(x);
         label.setYPos(y);
         add(label);
+    }
+
+    public void clearBoard(){
+        removeAll();
+        draggedLabels.clear();
+        repaint();
     }
 
 
@@ -197,8 +201,11 @@ public class WorkArea extends JPanel{
     private DraggablePanel dragPanel = new DraggablePanel();
     private JLabel trashLabel;
     public WorkArea() {
-
         // Visuals initialization
+        initialize();
+    }
+
+    public void initialize(){
         setLayout(new BorderLayout());
         // DraggablePanel dragPanel = new DraggablePanel();
         dragPanel.addDraggableLabel("Step", 500, 25, true); // Set initial position
@@ -215,6 +222,7 @@ public class WorkArea extends JPanel{
 
         add(dragPanel);
     }
+
 
     public JLabel getTrashLabel(){ return trashLabel; }
 

@@ -250,6 +250,8 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         System.out.println("Reset Instruction List");
                                         InstructionList.getInstructions().clearInstructionList();
                                         levels.changeCurrentLevel(levels.getCurrentLevel());
+                                        workAreaPanel.getDragPanel().clearBoard();
+                                        workAreaPanel.initialize();
                                         break;
                                 case("1"):
                                         System.out.println("Level 1");
