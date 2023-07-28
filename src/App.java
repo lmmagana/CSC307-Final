@@ -233,7 +233,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         InstructionList.getInstructions().addPaintBlue();
                                         tmp = new Instruction("Paint Blue");
                                         buttonRun.runOneInstruction(tmp, checkF);
-                                        workAreaPanel.addFromButton("Paint BLue", 200, 175);
+                                        workAreaPanel.addFromButton("Paint Blue", 200, 175);
                                         workAreaPanel.repaint();
                                         break;
                                 case("Green"):
