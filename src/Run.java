@@ -35,6 +35,7 @@ public class Run extends Observable implements Observer{
             flag = true;
             recursiveLoop(instructions.getInstructionLinkedList(), "Main List", null); //Populates grid with Colors
             Boolean result = checkResult();
+            System.out.println("TEST123" + result);
             promptResult(result);
             flag = false;
         }).start();
@@ -135,12 +136,16 @@ public class Run extends Observable implements Observer{
     }
 
     private void promptResult(Boolean result){
+        System.out.println("TEST12345" + result);
+
         if(result){
+            playSound("./images/nextLevel.wav");
             JOptionPane.showMessageDialog(null,
                     "Congratulations! You completed the puzzle! \n" +
                             "Click on one of the other levels to try a different puzzle or reset the level to try again",
                     "Puzzle Result!", JOptionPane.PLAIN_MESSAGE);
-        } else{
+        } else {
+            playSound("./images/tryAgain.wav");
             JOptionPane.showMessageDialog(null,
                     "Oh no!!! Looks like your solution wasn't right! \n" +
                             "Try again",
@@ -169,7 +174,7 @@ public class Run extends Observable implements Observer{
             default -> check = false;
         }
         if(check){
-            playYouLoseSound(); 
+            playSound("./images/youLose.wav"); 
             JOptionPane.showMessageDialog(null,
                     "Oh no!!! You hit a wall \n" +
                             "Try again",
@@ -191,9 +196,9 @@ public class Run extends Observable implements Observer{
     public Spider.Direction getSpiderDirection() { return spiderDirection; }
     public Color[] getGrid() { return grid; }
 
-    private void playYouLoseSound() {
+    private void playSound(String soundFileName) {
         try {
-            File audioFile = new File("./images/youLose.wav");
+            File audioFile = new File(soundFileName);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
