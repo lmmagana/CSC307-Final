@@ -34,8 +34,6 @@ public class WorldPanel extends JPanel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("WorldPanel Observer Notified");
-        //paintComponent(this.getGraphics());
         repaint();
     }
 }

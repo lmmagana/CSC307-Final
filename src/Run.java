@@ -25,18 +25,9 @@ public class Run extends Observable implements Observer{
     }
 
     public void execute(){
-        speed = LevelHelper.getLevels().getRunSpeed();
-        lvl = LevelHelper.getLevels().getLevel();
-        instructions = InstructionList.getInstructions();
-        grid = new Color[lvl.getGridSize() * lvl.getGridSize()];
-        Arrays.fill(grid, Color.BLACK);
-        spiderX = lvl.getSpiderX();
-        spiderY = lvl.getSpiderY();
-        spiderDirection = lvl.getSpiderDirection();
-
+        initialize();
         setChanged();
         notifyObservers();
-
         new Thread(() -> {
             flag = true;
             recursiveLoop(instructions.getInstructionLinkedList(), "Main List", null); //Populates grid with Colors
@@ -47,22 +38,13 @@ public class Run extends Observable implements Observer{
     }
 
     public void runOneInstruction(Instruction inst, int checkFirst){
-        if(checkFirst == 1) {
-            lvl = LevelHelper.getLevels().getLevel();
-            instructions = InstructionList.getInstructions();
-            grid = new Color[lvl.getGridSize() * lvl.getGridSize()];
-            Arrays.fill(grid, Color.BLACK);
-            spiderX = lvl.getSpiderX();
-            spiderY = lvl.getSpiderY();
-            spiderDirection = lvl.getSpiderDirection();
-        }
+        if(checkFirst == 1) initialize();
+
         if(inst.getInstruction().equals("Step") && promptHitWall());
         else computeInstruction(inst);
 
         Boolean res = checkResult();
-        if(res){
-            promptResult(res);
-        }
+        if(res) promptResult(res);
     }
 
     private void recursiveLoop(LinkedList<Instruction> instructionList, String flg, Color clr){
@@ -163,6 +145,16 @@ public class Run extends Observable implements Observer{
         }
     }
 
+    private void initialize(){
+        lvl = LevelHelper.getLevels().getLevel();
+        instructions = InstructionList.getInstructions();
+        grid = new Color[lvl.getGridSize() * lvl.getGridSize()];
+        Arrays.fill(grid, Color.BLACK);
+        spiderX = lvl.getSpiderX();
+        spiderY = lvl.getSpiderY();
+        spiderDirection = lvl.getSpiderDirection();
+    }
+
     private Boolean promptHitWall(){
         Boolean check;
         switch (spiderDirection) {
@@ -196,17 +188,8 @@ public class Run extends Observable implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        if(flag) {
-            speed = LevelHelper.getLevels().getRunSpeed();
-        } else {
-            lvl = LevelHelper.getLevels().getLevel();
-            instructions = InstructionList.getInstructions();
-            grid = new Color[lvl.getGridSize() * lvl.getGridSize()];
-            Arrays.fill(grid, Color.BLACK);
-            spiderX = lvl.getSpiderX();
-            spiderY = lvl.getSpiderY();
-            spiderDirection = lvl.getSpiderDirection();
-        }
+        if(flag) speed = LevelHelper.getLevels().getRunSpeed();
+        else initialize();
     }
 }
 

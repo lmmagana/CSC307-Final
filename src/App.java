@@ -209,7 +209,6 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                             "Directions", JOptionPane.PLAIN_MESSAGE);
                                         break;
                                 case("Step"):
-                                        System.out.println("Step spider");
                                         InstructionList.getInstructions().addStep();
                                         tmp = new Instruction("Step");
                                         buttonRun.runOneInstruction(tmp, checkF);
@@ -217,7 +216,6 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         workAreaPanel.repaint();
                                         break;
                                 case("Turn"):
-                                        System.out.println("Turn spider");
                                         InstructionList.getInstructions().addTurn();
                                         tmp = new Instruction("Turn");
                                         buttonRun.runOneInstruction(tmp, checkF);
@@ -225,7 +223,6 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         workAreaPanel.repaint();
                                         break;
                                 case("Red"):
-                                        System.out.println("Paint red");
                                         InstructionList.getInstructions().addPaintRed();
                                         tmp = new Instruction("Paint Red");
                                         buttonRun.runOneInstruction(tmp, checkF);
@@ -233,7 +230,6 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         workAreaPanel.repaint();
                                         break;
                                 case("Blue"):
-                                        System.out.println("Paint Blue");
                                         InstructionList.getInstructions().addPaintBlue();
                                         tmp = new Instruction("Paint Blue");
                                         buttonRun.runOneInstruction(tmp, checkF);
@@ -241,7 +237,6 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         workAreaPanel.repaint();
                                         break;
                                 case("Green"):
-                                        System.out.println("Paint Green");
                                         InstructionList.getInstructions().addPaintGreen();
                                         tmp = new Instruction("Paint Green");
                                         buttonRun.runOneInstruction(tmp, checkF);
@@ -249,7 +244,6 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         workAreaPanel.repaint();
                                         break;
                                 case("Black"):
-                                        System.out.println("Paint Black");
                                         InstructionList.getInstructions().addPaintBlack();
                                         tmp = new Instruction("Paint Black");
                                         buttonRun.runOneInstruction(tmp, checkF);
@@ -272,63 +266,48 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         workAreaPanel.initialize();
                                         break;
                                 case("1"):
-                                        System.out.println("Level 1");
                                         levels.changeCurrentLevel(1);
                                         break;
                                 case("2"):
-                                        System.out.println("Level 2");
                                         levels.changeCurrentLevel(2);
                                         break;
                                 case("3"):
-                                        System.out.println("Level 3");
                                         levels.changeCurrentLevel(3);
                                         break;
                                 case("4"):
-                                        System.out.println("Level 4");
                                         levels.changeCurrentLevel(4);
                                         break;
                                 case("5"):
-                                        System.out.println("Level 5");
                                         levels.changeCurrentLevel(5);
                                         break;
                                 case("6"):
-                                        System.out.println("Level 6");
                                         levels.changeCurrentLevel(6);
                                         break;
                                 case("7"):
-                                        System.out.println("Level 7");
                                         levels.changeCurrentLevel(7);
                                         break;
                                 case("8"):
-                                        System.out.println("Level 8");
                                         levels.changeCurrentLevel(8);
                                         break;
                                 case("9"):
-                                        System.out.println("Level 9");
                                         levels.changeCurrentLevel(9);
                                         break;
                                 case("10"):
-                                        System.out.println("Level 10");
                                         levels.changeCurrentLevel(10);
                                         break;
                                 case("11"):
-                                        System.out.println("Level 11");
                                         levels.changeCurrentLevel(11);
                                         break;
                                 case("12"):
-                                        System.out.println("Level 12");
                                         levels.changeCurrentLevel(12);
                                         break;
                                 case("13"):
-                                        System.out.println("Level 13");
                                         levels.changeCurrentLevel(13);
                                         break;
                                 case("14"):
-                                        System.out.println("Level 14");
                                         levels.changeCurrentLevel(14);
                                         break;
                                 case("15"):
-                                        System.out.println("Level 15");
                                         levels.changeCurrentLevel(15);
                                         break;
                         }
