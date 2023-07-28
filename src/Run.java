@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Run extends Observable implements Observer{
 
@@ -166,6 +169,7 @@ public class Run extends Observable implements Observer{
             default -> check = false;
         }
         if(check){
+            playYouLoseSound(); 
             JOptionPane.showMessageDialog(null,
                     "Oh no!!! You hit a wall \n" +
                             "Try again",
@@ -186,6 +190,19 @@ public class Run extends Observable implements Observer{
     public int getSpiderY() { return spiderY; }
     public Spider.Direction getSpiderDirection() { return spiderDirection; }
     public Color[] getGrid() { return grid; }
+
+    private void playYouLoseSound() {
+        try {
+            File audioFile = new File("./images/youLose.wav");
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void update(Observable o, Object arg) {
