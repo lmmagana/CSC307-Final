@@ -14,11 +14,15 @@ public class App extends JFrame implements ActionListener, ChangeListener {
         private WorkArea workAreaPanel = new WorkArea();
         private ConnectHelper c;
         private WorldPanel worldPanel;
+        private Run buttonRun;
+        private int checkF;
 
         public App() {
                 super("Spider World");
                 c = new ConnectHelper();
-
+                buttonRun = Run.getInstance();
+                checkF = 0;
+                
                 worldPanel = new WorldPanel();
                 LevelHelper levels = LevelHelper.getLevels(); //Singleton of levels
                 Run execute = Run.getInstance(); //Singleton of run instructions
@@ -193,6 +197,8 @@ public class App extends JFrame implements ActionListener, ChangeListener {
         @Override
         public void actionPerformed(ActionEvent e) {
                 //System.out.println(e.getActionCommand());
+                checkF++;
+                Instruction tmp;
                 LevelHelper levels = LevelHelper.getLevels();
                 if (e.getSource().getClass().getName().equals("javax.swing.JButton")) {
                         switch(((JButton) e.getSource()).getText()){
@@ -205,36 +211,48 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                 case("Step"):
                                         System.out.println("Step spider");
                                         InstructionList.getInstructions().addStep();
+                                        tmp = new Instruction("Step");
+                                        buttonRun.runOneInstruction(tmp, checkF);
                                         workAreaPanel.addFromButton("Step", 200, 25);
                                         workAreaPanel.repaint();
                                         break;
                                 case("Turn"):
                                         System.out.println("Turn spider");
                                         InstructionList.getInstructions().addTurn();
+                                        tmp = new Instruction("Turn");
+                                        buttonRun.runOneInstruction(tmp, checkF);
                                         workAreaPanel.addFromButton("Turn", 200, 75);
                                         workAreaPanel.repaint();
                                         break;
                                 case("Red"):
                                         System.out.println("Paint red");
                                         InstructionList.getInstructions().addPaintRed();
+                                        tmp = new Instruction("Paint Red");
+                                        buttonRun.runOneInstruction(tmp, checkF);
                                         workAreaPanel.addFromButton("Paint Red", 200, 125);
                                         workAreaPanel.repaint();
                                         break;
                                 case("Blue"):
                                         System.out.println("Paint Blue");
                                         InstructionList.getInstructions().addPaintBlue();
+                                        tmp = new Instruction("Paint Blue");
+                                        buttonRun.runOneInstruction(tmp, checkF);
                                         workAreaPanel.addFromButton("Paint BLue", 200, 175);
                                         workAreaPanel.repaint();
                                         break;
                                 case("Green"):
                                         System.out.println("Paint Green");
                                         InstructionList.getInstructions().addPaintGreen();
+                                        tmp = new Instruction("Paint Green");
+                                        buttonRun.runOneInstruction(tmp, checkF);
                                         workAreaPanel.addFromButton("Paint Green", 200, 225);
                                         workAreaPanel.repaint();
                                         break;
                                 case("Black"):
                                         System.out.println("Paint Black");
                                         InstructionList.getInstructions().addPaintBlack();
+                                        tmp = new Instruction("Paint Black");
+                                        buttonRun.runOneInstruction(tmp, checkF);
                                         workAreaPanel.addFromButton("Paint Black", 200, 275);
                                         workAreaPanel.repaint();
                                         break;
