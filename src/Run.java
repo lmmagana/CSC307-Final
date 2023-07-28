@@ -146,6 +146,7 @@ public class Run extends Observable implements Observer{
     }
 
     private void initialize(){
+        speed = LevelHelper.getLevels().getRunSpeed();
         lvl = LevelHelper.getLevels().getLevel();
         instructions = InstructionList.getInstructions();
         grid = new Color[lvl.getGridSize() * lvl.getGridSize()];
