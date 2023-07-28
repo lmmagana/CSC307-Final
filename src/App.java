@@ -252,14 +252,12 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         break;
                                 case("Play"):
                                         if(Run.getInstance().flag) return;
-                                        System.out.println("Play world");
                                         System.out.println(InstructionList.getInstructions());
                                         Run play = Run.getInstance();
                                         play.execute();
                                         break;
                                 case("Restart Level"):
                                         if(Run.getInstance().flag) return;
-                                        System.out.println("Reset Instruction List");
                                         InstructionList.getInstructions().clearInstructionList();
                                         levels.changeCurrentLevel(levels.getCurrentLevel());
                                         workAreaPanel.getDragPanel().clearBoard();

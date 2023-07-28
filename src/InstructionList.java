@@ -92,7 +92,7 @@ public class InstructionList extends Observable{
         for(int i = 0; i < _instance.getSize(); i ++){
             instructionlist[i] = _instance.getInstruction(i).toString();
         }
-        return "{" + String.join(", ", instructionlist) + "}";
+        return "Instructions: {" + String.join(", ", instructionlist) + "}";
     }
 
     private void insertHelper(int pos, int currentInx, LinkedList<Instruction> instList, Instruction instruction) {
