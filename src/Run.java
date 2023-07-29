@@ -35,7 +35,6 @@ public class Run extends Observable implements Observer{
             flag = true;
             recursiveLoop(instructions.getInstructionLinkedList(), "Main List", null); //Populates grid with Colors
             Boolean result = checkResult();
-            System.out.println("TEST123" + result);
             promptResult(result);
             flag = false;
         }).start();

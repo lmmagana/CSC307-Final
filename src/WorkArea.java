@@ -46,7 +46,7 @@ class DraggableLabel extends JLabel implements MouseListener {
             DraggableLabel newLabel = new DraggableLabel(getText(), x, y);
             newLabel.setOpaque(true);
             newLabel.setBackground(Color.WHITE);
-            newLabel.setBounds(x, y, 75, 35);
+            newLabel.setBounds(x, y, 200, 35);
             parentPanel.add(newLabel);
             System.out.println("New Label added");
             parentPanel.repaint();
@@ -136,7 +136,7 @@ class DraggablePanel extends JPanel {
         label.setInitialFlag(initial);
         label.setOpaque(true);
         label.setBackground(Color.WHITE);
-        label.setBounds(x, y, 75, 35); // Set the size of the label here
+        label.setBounds(x, y, 200, 35); // Set the size of the label here
         label.setXPos(x);
         label.setYPos(y);
         add(label);
@@ -180,12 +180,16 @@ public class WorkArea extends JPanel{
     public void initialize(){
         setLayout(new BorderLayout());
         // DraggablePanel dragPanel = new DraggablePanel();
-        dragPanel.addDraggableLabel("Step", 500, 25, true); // Set initial position
-        dragPanel.addDraggableLabel("Turn", 500, 75, true);
-        dragPanel.addDraggableLabel("Paint Red", 500, 125, true);
-        dragPanel.addDraggableLabel("Paint Blue", 500, 175, true);
-        dragPanel.addDraggableLabel("Paint Green", 500, 225, true);
-        dragPanel.addDraggableLabel("Repeat until hit wall", 500, 275, true);
+        dragPanel.addDraggableLabel("Step", 400, 25, true); // Set initial position
+        dragPanel.addDraggableLabel("Turn", 400, 75, true);
+        dragPanel.addDraggableLabel("Paint Red", 400, 125, true);
+        dragPanel.addDraggableLabel("Paint Blue", 400, 175, true);
+        dragPanel.addDraggableLabel("Paint Green", 400, 225, true);
+        dragPanel.addDraggableLabel("Paint Black", 400, 275, true);
+        dragPanel.addDraggableLabel("Loop: Repeat Until Hit Wall", 400, 325, true);
+        dragPanel.addDraggableLabel("Loop: Repeat Until Hit Color", 400, 375, true);
+        dragPanel.addDraggableLabel("End Loop", 400, 375, true);
+
         ImageIcon trashIcon = new ImageIcon("./images/trash-bin-3.png");
         trashLabel = new JLabel(trashIcon);
         trashLabel.setBounds(35, 575, 75, 75); // Set the size of the label here
