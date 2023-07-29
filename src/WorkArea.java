@@ -28,7 +28,6 @@ class DraggableLabel extends JLabel implements MouseListener {
     public void setInitialFlag(Boolean val){
         initialBlock = val;
     }
-
     public int getXPos(){return xpos;}
     public int getYPos(){return ypos;}
     public void setXPos(int x){ xpos = x;}
@@ -53,21 +52,16 @@ class DraggableLabel extends JLabel implements MouseListener {
             parentPanel.repaint();
         }
     }
-
     public void mouseClicked(MouseEvent e) {}
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
     public void mouseReleased(MouseEvent e) {
         System.out.println("Label released: " + getText());
-
         DraggablePanel parentPanel = (DraggablePanel) getParent();
-
         // Snap to other labels if released nearby
         int snapThreshold = 50; // Adjust this value as needed for the snapping sensitivity
-
         Point center = new Point(getLocation().x + getWidth() / 2, getLocation().y + getHeight() / 2);
         Component[] components = parentPanel.getComponents();
-
         for (Component component : components) {
             if (component instanceof DraggableLabel && component != this) {
                 Point otherCenter = new Point(component.getLocation().x + component.getWidth() / 2,
@@ -84,16 +78,12 @@ class DraggableLabel extends JLabel implements MouseListener {
                 }
             }
         }
-
         xpos = getLocation().x;
         ypos = getLocation().y;
         System.out.println(xpos + " " + ypos);
-
         if (initialBlock){
             parentPanel.addDraggedLabel(this);
-        }
-
-        if (!initialBlock) {
+        } else if (!initialBlock) {
             Point trashIconPosition = new Point(35, 575);
             int trashIconWidth = 75;
             int trashIconHeight = 75;
@@ -109,8 +99,6 @@ class DraggableLabel extends JLabel implements MouseListener {
                 parentPanel.repaint();
             }
         }
-
-
         if (initialBlock) {
             switch (getText()) {
                 case ("Step"):
@@ -136,7 +124,6 @@ class DraggableLabel extends JLabel implements MouseListener {
         }
         initialBlock = false;
     }
-
 }
 
 class DraggablePanel extends JPanel {
@@ -144,7 +131,6 @@ class DraggablePanel extends JPanel {
     DraggablePanel() {
         setLayout(null);
     }
-
     public void addDraggableLabel(String text, int x, int y, Boolean initial) {
         DraggableLabel label = new DraggableLabel(text, x, y);
         label.setInitialFlag(initial);
@@ -155,22 +141,17 @@ class DraggablePanel extends JPanel {
         label.setYPos(y);
         add(label);
     }
-
     public void clearBoard(){
         removeAll();
         draggedLabels.clear();
         repaint();
     }
-
-
     public void addDraggedLabel(DraggableLabel label) {
         draggedLabels.add(label);
     }
-
     public List<DraggableLabel> getDraggedLabels() {
         return draggedLabels;
     }
-
     public void popDraggedLabel(){
         for (DraggableLabel str : draggedLabels)
         {
@@ -185,26 +166,17 @@ class DraggablePanel extends JPanel {
             System.out.println(str.getYPos());
         }
     }
-
     public void popDraggableLabel(){
-
     }
-
-
-
-
-
 }
 
 public class WorkArea extends JPanel{
-
     private DraggablePanel dragPanel = new DraggablePanel();
     private JLabel trashLabel;
     public WorkArea() {
         // Visuals initialization
         initialize();
     }
-
     public void initialize(){
         setLayout(new BorderLayout());
         // DraggablePanel dragPanel = new DraggablePanel();
@@ -213,29 +185,21 @@ public class WorkArea extends JPanel{
         dragPanel.addDraggableLabel("Paint Red", 500, 125, true);
         dragPanel.addDraggableLabel("Paint Blue", 500, 175, true);
         dragPanel.addDraggableLabel("Paint Green", 500, 225, true);
-        dragPanel.addDraggableLabel("Paint Black", 500, 275, true);
-
+        dragPanel.addDraggableLabel("Repeat until hit wall", 500, 275, true);
         ImageIcon trashIcon = new ImageIcon("./images/trash-bin-3.png");
         trashLabel = new JLabel(trashIcon);
         trashLabel.setBounds(35, 575, 75, 75); // Set the size of the label here
         dragPanel.add(trashLabel);
-
         add(dragPanel);
     }
-
-
     public JLabel getTrashLabel(){ return trashLabel; }
-
-
     public void addFromButton(String text, int x, int y){
-
         List<DraggableLabel> list = dragPanel.getDraggedLabels();
         for (DraggableLabel str : list)
         {
             System.out.print(str.getXPos() + " and ");
             System.out.println(str.getYPos());
         }
-
         if (list.size() != 0) {
             int xpos = list.get(list.size() - 1).getXPos();
             int ypos = list.get(list.size() - 1).getYPos();
@@ -246,7 +210,6 @@ public class WorkArea extends JPanel{
             dragPanel.addDraggedLabel(labelFromButton);
             dragPanel.addDraggableLabel(text, xpos, ypos + 35, false);
         } else {
-            // The list is empty; handle this case accordingly
             System.out.println("The list of DraggableLabels is empty.");
             DraggableLabel labelFromButton = new DraggableLabel(text, x, y);
             labelFromButton.setInitialFlag(false);
@@ -255,21 +218,11 @@ public class WorkArea extends JPanel{
             dragPanel.addDraggedLabel(labelFromButton);
             dragPanel.addDraggableLabel(text, 200, 25, false);
         }
-
-        /*
-        Component[] components = dragPanel.getComponents();
-        int xpos = components[0].getLocation().x;
-        int ypos = components[0].getLocation().y;
-        */
     }
-
-
     public DraggablePanel getDragPanel(){
         return dragPanel;
     }
-
     public void paintComponent(Graphics g){
         super.paintComponent(g);
     }
-
 }

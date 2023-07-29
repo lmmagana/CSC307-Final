@@ -79,17 +79,9 @@ public class World extends JPanel {
                 default:
                     return;
             }
-
-            //Load the spider image from the file
-//            InputStream is = getClass().getResourceAsStream(spiderImageFile);
-//            BufferedImage spiderImage = ImageIO.read(is);
             BufferedImage spiderImage = ImageIO.read(new File(spiderImageFile));
-
-            // Calculate new x and y coordinates to center the image within the cell
             int newX = x - spiderImage.getWidth() / 2;
             int newY = y - spiderImage.getHeight() / 2;
-
-            // Draw the spider image at the new coordinates
             g.drawImage(spiderImage, newX, newY, null);
             ImageIcon sp = new ImageIcon(spiderImageFile);
         } catch (IOException e) {
@@ -98,9 +90,7 @@ public class World extends JPanel {
     }
 
     private void drawGrid(Graphics g) {
-
         drawCells(g);
-
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 int x = col * cellSize;
@@ -122,7 +112,6 @@ public class World extends JPanel {
             int y = ((dimond.getY() - 1) * cellSize) + cellSize / 2;
             drawDiamond(g, x, y, dimond.getColor());
         }
-
         int x = ((spider.getX() - 1) * cellSize) + cellSize / 2;
         int y = ((spider.getY() - 1) * cellSize) + cellSize / 2;
         drawSpider(g, x, y, spider.getDirection());

@@ -126,18 +126,35 @@ public class Run extends Observable implements Observer{
         };
     }
 
-    private boolean checkResult(){
-        for(int i = 0; i < lvl.getNumberOfDiamonds(); i ++){
+    private boolean checkResult() {
+        int gridSize = lvl.getGridSize();        
+        // First check if all grids with diamonds are filled correctly.
+        for(int i = 0; i < lvl.getNumberOfDiamonds(); i++){
             Diamond check = lvl.getDiamond(i);
             Color gridColor = getGridSpaceColor(check.getX(), check.getY());
             if(gridColor != check.getColor()) return false;
         }
+        
+        for(int x = 1; x <= gridSize; x++){
+            for(int y = 1; y <= gridSize; y++){
+                Color gridColor = getGridSpaceColor(x, y);
+                // Check if this grid doesn't contain a diamond
+                boolean containsDiamond = false;
+                for(int i = 0; i < lvl.getNumberOfDiamonds(); i++){
+                    Diamond diamond = lvl.getDiamond(i);
+                    if(diamond.getX() == x && diamond.getY() == y){
+                        containsDiamond = true;
+                        break;
+                    }
+                }
+                // If this grid doesn't contain a diamond and its color isn't black, return false.
+                if(!containsDiamond && gridColor != Color.BLACK) return false;
+            }
+        }
         return true;
     }
-
+    
     private void promptResult(Boolean result){
-        System.out.println("TEST12345" + result);
-
         if(result){
             playSound("./images/nextLevel.wav");
             JOptionPane.showMessageDialog(null,

@@ -18,7 +18,6 @@ public class WorldPanel extends JPanel implements Observer {
 
     public WorldPanel() {
         setLayout(null);
-
         gridSize = LevelHelper.getLevels().getLevel().getGridSize();
         world = new World(LevelHelper.getLevels().getLevel());
         world.setBounds(xOffset, yOffset, gridSize * cellSize, gridSize * cellSize);
