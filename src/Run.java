@@ -60,8 +60,8 @@ public class Run extends Observable implements Observer{
                 if(inst.getInstruction().equals("Step") && promptHitWall()) break;
                 else computeInstruction(inst);
             }
-            if(flg.equals("Repeat Until Wall") && i == instructionList.size() - 1 && hitWallHelper()) break;
-            if(flg.equals("Repeat Until Color") && i == instructionList.size() - 1 && colorDetectHelper(clr)) break;
+            if(flg.equals("Loop: Repeat Until Hit Wall") && i == instructionList.size() - 1 && hitWallHelper()) break;
+            if(flg.equals("Loop: Repeat Until Color") && i == instructionList.size() - 1 && colorDetectHelper(clr)) break;
             if(flg.split(" ")[0].equals("Repeat") && i == instructionList.size() - 1) i = -1;
         }
     }

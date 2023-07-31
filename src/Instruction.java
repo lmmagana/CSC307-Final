@@ -8,7 +8,7 @@ public class Instruction {
 
     public Instruction(String instruction){
         this.instruction = instruction;
-        if(instruction.equals("Repeat Until Wall") | instruction.equals("Repeat Until Color")){
+        if(instruction.equals("Loop: Repeat Until Hit Wall") | instruction.equals("Loop: Repeat Until Color")){
            repeatList = new LinkedList<Instruction>();
         }
     }
@@ -16,7 +16,7 @@ public class Instruction {
     public Instruction(String instruction, Color paintColor){
         this.instruction = instruction;
         this.paintColor = paintColor;
-        if(instruction.equals("Repeat Until Wall") | instruction.equals("Repeat Until Color")){
+        if(instruction.equals("Loop: Repeat Until Hit Wall") | instruction.equals("Loop: Repeat Until Color")){
             repeatList = new LinkedList<Instruction>();
         }
     }

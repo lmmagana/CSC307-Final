@@ -55,16 +55,16 @@ public class InstructionList extends Observable{
         instructions.add(pos, new Instruction("Paint Black"));
     }
 
-    public void addRepeatUntilWall(){ instructions.add(new Instruction("Repeat Until Wall")); }
-    public void addRepeatUntilWall(LinkedList<Instruction> instructionSet){instructionSet.add(new Instruction("Repeat Until Wall"));}
+    public void addRepeatUntilWall(){ instructions.add(new Instruction("Loop: Repeat Until Hit Wall")); }
+    public void addRepeatUntilWall(LinkedList<Instruction> instructionSet){instructionSet.add(new Instruction("Loop: Repeat Until Hit Wall"));}
     public void insertRepeatUntilWall(int pos){
-        instructions.add(pos, new Instruction("Repeat Until Wall"));
+        instructions.add(pos, new Instruction("Loop: Repeat Until Hit Wall"));
     }
 
-    public void addRepeatUntilColor(Color color){ instructions.add(new Instruction("Repeat Until Color", color)); }
-    public void addRepeatUntilColor(LinkedList<Instruction> instructionSet, Color color){instructionSet.add(new Instruction("Repeat Until Color", color));}
+    public void addRepeatUntilColor(Color color){ instructions.add(new Instruction("Loop: Repeat Until Color", color)); }
+    public void addRepeatUntilColor(LinkedList<Instruction> instructionSet, Color color){instructionSet.add(new Instruction("Loop: Repeat Until Color", color));}
     public void insertRepeatUntilColor(int pos){
-        instructions.add(pos, new Instruction("Repeat Until Wall"));
+        instructions.add(pos, new Instruction("Loop: Repeat Until Color"));
     }
 
     public void removeInstruction(int pos){ instructions.remove(pos); }
