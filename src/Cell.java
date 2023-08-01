@@ -10,15 +10,12 @@ public class Cell {
     public boolean isPainted() {
         return painted;
     }
-
     public void setPainted(boolean painted) {
         this.painted = painted;
     }
-
     public String getColor() {
         return color;
     }
-
     public void setColor(String color) {
         this.color = color;
     }

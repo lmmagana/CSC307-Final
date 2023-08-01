@@ -73,42 +73,30 @@ public class Run extends Observable implements Observer{
                     case NORTH -> spiderY--;
                     case EAST -> spiderX++;
                     case SOUTH -> spiderY++;
-                    case WEST -> spiderX--;
-                }
-                setChanged();
-                notifyObservers();
+                    case WEST -> spiderX--; }
                 break;
             case "Turn":
                 switch (spiderDirection){
                     case EAST -> spiderDirection = Spider.Direction.SOUTH;
                     case WEST -> spiderDirection = Spider.Direction.NORTH;
                     case SOUTH -> spiderDirection = Spider.Direction.WEST;
-                    case NORTH -> spiderDirection = Spider.Direction.EAST;
-                }
-                setChanged();
-                notifyObservers();
+                    case NORTH -> spiderDirection = Spider.Direction.EAST; }
                 break;
             case "Paint Red":
                 setgridSpaceColor(spiderX, spiderY, Color.RED);
-                setChanged();
-                notifyObservers();
                 break;
             case "Paint Blue":
                 setgridSpaceColor(spiderX, spiderY, Color.BLUE);
-                setChanged();
-                notifyObservers();
                 break;
             case "Paint Green":
                 setgridSpaceColor(spiderX, spiderY, Color.GREEN);
-                setChanged();
-                notifyObservers();
                 break;
             case "Paint Black":
                 setgridSpaceColor(spiderX, spiderY, Color.BLACK);
-                setChanged();
-                notifyObservers();
                 break;
         }
+        setChanged();
+        notifyObservers();
     }
 
     private boolean hitWallHelper(){

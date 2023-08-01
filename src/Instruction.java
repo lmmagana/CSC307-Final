@@ -23,10 +23,7 @@ public class Instruction {
 
     public Boolean checkForLoop(){ return repeatList != null; }
     public LinkedList<Instruction> getRepeatInstructions(){ return repeatList; }
-    public int getRepeatSize(){return repeatList.size();}
     public String getInstruction() { return instruction; }
-    public void addToRepeat(Instruction instruction){repeatList.add(instruction);}
-    public void insertRepeat(int pos, Instruction instruction){repeatList.add(pos, instruction);}
     public Color getPaintColor(){return this.paintColor;}
 
     @Override

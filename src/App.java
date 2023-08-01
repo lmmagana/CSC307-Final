@@ -15,14 +15,12 @@ import java.util.List;
 public class App extends JFrame implements ActionListener, ChangeListener {
 
         private WorkArea workAreaPanel = new WorkArea();
-        private ConnectHelper c;
         private WorldPanel worldPanel;
         private Run buttonRun;
         private int checkF;
 
         public App() {
                 super("Spider World");
-                c = new ConnectHelper();
                 buttonRun = Run.getInstance();
                 checkF = 0;
                 
@@ -141,7 +139,6 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 blackButton.addActionListener(this);
 
                 // panel for the world
-                //worldPanel = new WorldPanel();
                 worldPanel.setBackground(Color.WHITE);
                 worldPanel.setBounds(0, 100, 500, 750);
                 add(worldPanel);
@@ -166,9 +163,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 playButton.addActionListener(this);
                 speedSlider.addChangeListener(this);
 
-                // right side
-                // workArea
-                // WorkArea workAreaPanel = new WorkArea();
+                // right side workArea
                 workAreaPanel.setBounds(875, 100, 625, 750);
                 add(workAreaPanel);
 
@@ -195,23 +190,10 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 InstructionList instructions = InstructionList.getInstructions(); //Singleton of Instructions
                 Run result = Run.getInstance(); //Singleton of Run
                 levels.addObserver(result); //Observer updates level info within execution when level changes
-
-                //TEST Level 11 W/ Nested Loops and Repeat Until Color
-//                instructions.clearInstructionList();
-//                levels.changeCurrentLevel(11);
-//                instructions.addRepeatUntilColor(Color.RED);
-//                LinkedList<Instruction> tillColor = instructions.getLast().getRepeatInstructions();
-//                instructions.addRepeatUntilWall(tillColor);
-//                LinkedList<Instruction> tillWall = tillColor.getLast().getRepeatInstructions();
-//                instructions.addPaintRed(tillWall);
-//                instructions.addStep(tillWall);
-//                instructions.addTurn(tillColor);
-                //ENDOFTEST
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-                //System.out.println(e.getActionCommand());
                 playSound("./images/ButtonClick.wav");
                 checkF++;
                 Instruction tmp;
@@ -336,9 +318,7 @@ public class App extends JFrame implements ActionListener, ChangeListener {
         }
 
         @Override
-        public void stateChanged(ChangeEvent e) {
-                LevelHelper.getLevels().changeRunSpeed(((JSlider) e.getSource()).getValue());
-        }
+        public void stateChanged(ChangeEvent e) { LevelHelper.getLevels().changeRunSpeed(((JSlider) e.getSource()).getValue()); }
 
         private void playSound(String soundFileName) {
                 try {

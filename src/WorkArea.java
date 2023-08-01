@@ -52,7 +52,6 @@ class DraggableLabel extends JLabel implements MouseListener {
             if(getText().contains("Repeat")) newLabel.setBounds(x, y, 125, 35);
             else newLabel.setBounds(x, y, 75, 35);
             parentPanel.add(newLabel);
-            System.out.println("New Label added");
             parentPanel.repaint();
         }
     }
@@ -60,7 +59,6 @@ class DraggableLabel extends JLabel implements MouseListener {
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
     public void mouseReleased(MouseEvent e) {
-        //System.out.println("Label released: " + getText());
         DraggablePanel parentPanel = (DraggablePanel) getParent();
         // Snap to other labels if released nearby
         int snapThreshold = 50; // Adjust this value as needed for the snapping sensitivity
@@ -84,7 +82,6 @@ class DraggableLabel extends JLabel implements MouseListener {
         }
         xpos = getLocation().x;
         ypos = getLocation().y;
-        //System.out.println(xpos + " " + ypos);
         if (initialBlock) parentPanel.addDraggedLabel(this);
         else {
             Point trashIconPosition = new Point(35, 575);
@@ -146,7 +143,6 @@ class DraggableLabel extends JLabel implements MouseListener {
                     currentInstructionList.pop();
                     break;
             }
-            System.out.println("Instruction: " + getText() + " added to InstrList");
         }
         initialBlock = false;
     }
@@ -179,20 +175,7 @@ class DraggablePanel extends JPanel {
     public List<DraggableLabel> getDraggedLabels() {
         return draggedLabels; }
 
-    public void popDraggedLabel(){
-        for (DraggableLabel str : draggedLabels)
-        {
-            System.out.print(str.getXPos() + " and ");
-            System.out.println(str.getYPos());
-        }
-        draggedLabels.remove(draggedLabels.size() - 1);
-        System.out.println("Removed label from draggedLabels");
-        for (DraggableLabel str : draggedLabels)
-        {
-            System.out.print(str.getXPos() + " and ");
-            System.out.println(str.getYPos());
-        }
-    }
+    public void popDraggedLabel(){ draggedLabels.remove(draggedLabels.size() - 1); }
     public void popDraggableLabel(){
     }
 }
@@ -252,11 +235,6 @@ public class WorkArea extends JPanel{
         }
 
         List<DraggableLabel> list = dragPanel.getDraggedLabels();
-        for (DraggableLabel str : list)
-        {
-            System.out.print(str.getXPos() + " and ");
-            System.out.println(str.getYPos());
-        }
 
         if (list.size() != 0) {
             int xpos = list.get(list.size() - 1).getXPos();
@@ -269,7 +247,6 @@ public class WorkArea extends JPanel{
             dragPanel.addDraggableLabel(text, xpos, ypos + 35, false);
         } else {
             // The list is empty; handle this case accordingly
-            System.out.println("The list of DraggableLabels is empty.");
             DraggableLabel labelFromButton = new DraggableLabel(text, x, y);
             labelFromButton.setInitialFlag(false);
             labelFromButton.setXPos(200);
@@ -277,12 +254,6 @@ public class WorkArea extends JPanel{
             dragPanel.addDraggedLabel(labelFromButton);
             dragPanel.addDraggableLabel(text, 200, 25, false);
         }
-
-        /*
-        Component[] components = dragPanel.getComponents();
-        int xpos = components[0].getLocation().x;
-        int ypos = components[0].getLocation().y;
-        */
     }
 
 

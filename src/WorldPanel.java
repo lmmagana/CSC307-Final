@@ -1,10 +1,5 @@
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.ImageObserver;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -33,7 +28,5 @@ public class WorldPanel extends JPanel implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        repaint();
-    }
+    public void update(Observable o, Object arg) { repaint(); }
 }

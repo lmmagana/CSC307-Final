@@ -4,10 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 public class World extends JPanel {
 
@@ -30,18 +27,6 @@ public class World extends JPanel {
                 cells[i][j] = new Cell();
             }
         }
-    }
-
-    public Cell getCell(int x, int y) {
-        return cells[x][y];
-    }
-
-    public int getGridSize() {
-        return size;
-    }
-
-    public Spider getSpider() {
-        return spider;
     }
 
     @Override
@@ -81,8 +66,6 @@ public class World extends JPanel {
             }
 
             //Load the spider image from the file
-//            InputStream is = getClass().getResourceAsStream(spiderImageFile);
-//            BufferedImage spiderImage = ImageIO.read(is);
             BufferedImage spiderImage = ImageIO.read(new File(spiderImageFile));
 
             // Calculate new x and y coordinates to center the image within the cell
