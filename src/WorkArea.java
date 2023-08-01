@@ -3,11 +3,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 class DraggableLabel extends JLabel implements MouseListener {
     private int mousePressedX;
     private int mousePressedY;
     private boolean initialBlock = true;
+    private boolean inLoop = false;
+    private Stack<Instruction> loopStack = new Stack<>();
 
     int xpos;
     int ypos;
@@ -56,6 +59,12 @@ class DraggableLabel extends JLabel implements MouseListener {
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
     public void mouseReleased(MouseEvent e) {
+        if (getText().equals("Loop: Repeat Until Hit Wall")) {
+            inLoop = true;
+            System.out.println("Test add Step to repeat list of instruction: ");
+        } else if (getText().equals("End Loop")) {
+            inLoop = false;
+        }
         System.out.println("Label released: " + getText());
         DraggablePanel parentPanel = (DraggablePanel) getParent();
         // Snap to other labels if released nearby
@@ -104,22 +113,61 @@ class DraggableLabel extends JLabel implements MouseListener {
         if (initialBlock) {
             switch (getText()) {
                 case ("Step"):
-                    InstructionList.getInstructions().addStep();
+                    if (inLoop && !InstructionList.getInstructions().getInstructionLinkedList().isEmpty()) {
+                        InstructionList.getInstructions().getLast().addToRepeat(new Instruction("Step"));
+                    } else {
+                        InstructionList.getInstructions().addStep();
+                    }
                     break;
                 case ("Turn"):
-                    InstructionList.getInstructions().addTurn();
+                    if (inLoop) {
+                        InstructionList.getInstructions().getLast().addToRepeat(new Instruction("Turn"));
+                    } else {
+                        InstructionList.getInstructions().addTurn();
+                    }
                     break;
+
                 case ("Paint Red"):
-                    InstructionList.getInstructions().addPaintRed();
+                    if (inLoop) {
+                        InstructionList.getInstructions().getLast().addToRepeat(new Instruction("Paint Red"));
+                    } else {
+                        InstructionList.getInstructions().addPaintRed();
+                    }
                     break;
                 case ("Paint Blue"):
-                    InstructionList.getInstructions().addPaintBlue();
+                    if (inLoop) {
+                        InstructionList.getInstructions().getLast().addToRepeat(new Instruction("Paint Blue"));
+                    } else {
+                        InstructionList.getInstructions().addPaintBlue();
+                    }
                     break;
                 case ("Paint Green"):
-                    InstructionList.getInstructions().addPaintGreen();
+                    if (inLoop) {
+                        InstructionList.getInstructions().getLast().addToRepeat(new Instruction("Paint Green"));
+                    } else {
+                        InstructionList.getInstructions().addPaintGreen();
+                    }
                     break;
                 case ("Paint Black"):
-                    InstructionList.getInstructions().addPaintBlack();
+                    if (inLoop) {
+                        InstructionList.getInstructions().getLast().addToRepeat(new Instruction("Paint Black"));
+                    } else {
+                        InstructionList.getInstructions().addPaintBlack();
+                    }
+                    break;
+                case ("Loop: Repeat Until Hit Wall"):
+                    if (inLoop) {
+                        InstructionList.getInstructions().getLast().addToRepeat(new Instruction("Loop: Repeat Until Hit Wall"));
+                    } else {
+                        InstructionList.getInstructions().addRepeatUntilWall();
+                    }
+                    break;
+                case ("Loop: Repeat Until Color"):
+                    if (inLoop) {
+                        InstructionList.getInstructions().getLast().addToRepeat(new Instruction("Loop: Repeat Until Color"));
+                    } else {
+                        InstructionList.getInstructions().addRepeatUntilColor(Color.RED); // replace Color.RED with the color you want
+                    }
                     break;
             }
             System.out.println("Instruction: " + getText() + " added to InstrList");
