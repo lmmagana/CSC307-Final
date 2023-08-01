@@ -175,6 +175,9 @@ class DraggablePanel extends JPanel {
 public class WorkArea extends JPanel{
     private DraggablePanel dragPanel = new DraggablePanel();
     private JLabel trashLabel;
+    private JLabel trashText;
+    private JComboBox<String> colorDropdown;
+
     public WorkArea() {
         // Visuals initialization
         initialize();
@@ -189,13 +192,24 @@ public class WorkArea extends JPanel{
         dragPanel.addDraggableLabel("Paint Green", 430, 225, true);
         dragPanel.addDraggableLabel("Paint Black", 430, 275, true);
         dragPanel.addDraggableLabel("Loop: Repeat Until Hit Wall", 430, 325, true);
-        dragPanel.addDraggableLabel("Loop: Repeat Until Color", 430, 375, true);
+        dragPanel.addDraggableLabel("Loop: Repeat Until Red", 430, 375, true);
         dragPanel.addDraggableLabel("End Loop", 430, 425, true);
-
         ImageIcon trashIcon = new ImageIcon("./images/trash-bin-3.png");
         trashLabel = new JLabel(trashIcon);
         trashLabel.setBounds(35, 575, 75, 75); // Set the size of the label here
+        trashText = new JLabel("Click the trash can to clear all block instructions");
+        trashText.setBounds(20, 640, 400, 25);
+        trashLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Run.getInstance().flag) return;
+                InstructionList.getInstructions().clearInstructionList();
+                dragPanel.clearBoard();
+                initialize();
+            }
+        });
         dragPanel.add(trashLabel);
+        dragPanel.add(trashText);
         add(dragPanel);
     }
     public JLabel getTrashLabel(){ return trashLabel; }

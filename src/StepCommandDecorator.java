@@ -31,7 +31,6 @@ public class StepCommandDecorator extends CodeBlockDecorator {
                 }
                 break;
         }
-
         decoratedCodeBlock.execute(spider, grid);
     }
 }
