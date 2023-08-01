@@ -2,7 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 class DraggableLabel extends JLabel implements MouseListener {
     private int mousePressedX;
@@ -11,9 +13,10 @@ class DraggableLabel extends JLabel implements MouseListener {
 
     int xpos;
     int ypos;
+    public static Stack<LinkedList<Instruction>> currentInstructionList = new Stack<>();
 
     DraggableLabel(String text, int x, int y) {
-        super(text);
+        super(text, SwingConstants.CENTER);
         addMouseListener(this); // Add the current instance of DraggableLabel as the MouseListener
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
@@ -28,7 +31,6 @@ class DraggableLabel extends JLabel implements MouseListener {
     public void setInitialFlag(Boolean val){
         initialBlock = val;
     }
-
     public int getXPos(){return xpos;}
     public int getYPos(){return ypos;}
     public void setXPos(int x){ xpos = x;}
@@ -47,27 +49,23 @@ class DraggableLabel extends JLabel implements MouseListener {
             DraggableLabel newLabel = new DraggableLabel(getText(), x, y);
             newLabel.setOpaque(true);
             newLabel.setBackground(Color.WHITE);
-            newLabel.setBounds(x, y, 75, 35);
+            if(getText().contains("Repeat")) newLabel.setBounds(x, y, 125, 35);
+            else newLabel.setBounds(x, y, 75, 35);
             parentPanel.add(newLabel);
             System.out.println("New Label added");
             parentPanel.repaint();
         }
     }
-
     public void mouseClicked(MouseEvent e) {}
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
     public void mouseReleased(MouseEvent e) {
-        System.out.println("Label released: " + getText());
-
+        //System.out.println("Label released: " + getText());
         DraggablePanel parentPanel = (DraggablePanel) getParent();
-
         // Snap to other labels if released nearby
         int snapThreshold = 50; // Adjust this value as needed for the snapping sensitivity
-
         Point center = new Point(getLocation().x + getWidth() / 2, getLocation().y + getHeight() / 2);
         Component[] components = parentPanel.getComponents();
-
         for (Component component : components) {
             if (component instanceof DraggableLabel && component != this) {
                 Point otherCenter = new Point(component.getLocation().x + component.getWidth() / 2,
@@ -84,16 +82,11 @@ class DraggableLabel extends JLabel implements MouseListener {
                 }
             }
         }
-
         xpos = getLocation().x;
         ypos = getLocation().y;
-        System.out.println(xpos + " " + ypos);
-
-        if (initialBlock){
-            parentPanel.addDraggedLabel(this);
-        }
-
-        if (!initialBlock) {
+        //System.out.println(xpos + " " + ypos);
+        if (initialBlock) parentPanel.addDraggedLabel(this);
+        else {
             Point trashIconPosition = new Point(35, 575);
             int trashIconWidth = 75;
             int trashIconHeight = 75;
@@ -109,34 +102,54 @@ class DraggableLabel extends JLabel implements MouseListener {
                 parentPanel.repaint();
             }
         }
-
-
         if (initialBlock) {
+            if (InstructionList.getInstructions().getSize() == 0){
+                currentInstructionList.clear();
+                currentInstructionList.add(InstructionList.getInstructions().getInstructionLinkedList()); }
+            LinkedList<Instruction> currentList = currentInstructionList.peek();
             switch (getText()) {
                 case ("Step"):
-                    InstructionList.getInstructions().addStep();
+                    InstructionList.getInstructions().addStep(currentList);
                     break;
                 case ("Turn"):
-                    InstructionList.getInstructions().addTurn();
+                    InstructionList.getInstructions().addTurn(currentList);
                     break;
                 case ("Paint Red"):
-                    InstructionList.getInstructions().addPaintRed();
+                    InstructionList.getInstructions().addPaintRed(currentList);
                     break;
                 case ("Paint Blue"):
-                    InstructionList.getInstructions().addPaintBlue();
+                    InstructionList.getInstructions().addPaintBlue(currentList);
                     break;
                 case ("Paint Green"):
-                    InstructionList.getInstructions().addPaintGreen();
+                    InstructionList.getInstructions().addPaintGreen(currentList);
                     break;
                 case ("Paint Black"):
-                    InstructionList.getInstructions().addPaintBlack();
+                    InstructionList.getInstructions().addPaintBlack(currentList);
+                    break;
+                case ("Repeat Until Wall"):
+                    InstructionList.getInstructions().addRepeatUntilWall(currentList);
+                    currentInstructionList.add(InstructionList.getInstructions().getLastRepeat());
+                    break;
+                case ("Repeat Until Red"):
+                    InstructionList.getInstructions().addRepeatUntilColor(currentList, Color.RED);
+                    currentInstructionList.add(InstructionList.getInstructions().getLastRepeat());
+                    break;
+                case ("Repeat Until Blue"):
+                    InstructionList.getInstructions().addRepeatUntilColor(currentList, Color.BLUE);
+                    currentInstructionList.add(InstructionList.getInstructions().getLastRepeat());
+                    break;
+                case ("Repeat Until Green"):
+                    InstructionList.getInstructions().addRepeatUntilColor(currentList, Color.GREEN);
+                    currentInstructionList.add(InstructionList.getInstructions().getLastRepeat());
+                    break;
+                case ("End Repeat"):
+                    currentInstructionList.pop();
                     break;
             }
             System.out.println("Instruction: " + getText() + " added to InstrList");
         }
         initialBlock = false;
     }
-
 }
 
 class DraggablePanel extends JPanel {
@@ -144,32 +157,27 @@ class DraggablePanel extends JPanel {
     DraggablePanel() {
         setLayout(null);
     }
-
     public void addDraggableLabel(String text, int x, int y, Boolean initial) {
         DraggableLabel label = new DraggableLabel(text, x, y);
         label.setInitialFlag(initial);
         label.setOpaque(true);
         label.setBackground(Color.WHITE);
-        label.setBounds(x, y, 75, 35); // Set the size of the label here
+        if(text.contains("Repeat")) label.setBounds(x, y, 125, 35); // Set the size of the label here
+        else label.setBounds(x, y, 75, 35);
         label.setXPos(x);
         label.setYPos(y);
         add(label);
     }
-
     public void clearBoard(){
         removeAll();
         draggedLabels.clear();
-        repaint();
-    }
-
+        repaint(); }
 
     public void addDraggedLabel(DraggableLabel label) {
-        draggedLabels.add(label);
-    }
+        draggedLabels.add(label); }
 
     public List<DraggableLabel> getDraggedLabels() {
-        return draggedLabels;
-    }
+        return draggedLabels; }
 
     public void popDraggedLabel(){
         for (DraggableLabel str : draggedLabels)
@@ -185,25 +193,14 @@ class DraggablePanel extends JPanel {
             System.out.println(str.getYPos());
         }
     }
-
     public void popDraggableLabel(){
-
     }
-
-
-
-
-
 }
 
 public class WorkArea extends JPanel{
-
     private DraggablePanel dragPanel = new DraggablePanel();
     private JLabel trashLabel;
-    public WorkArea() {
-        // Visuals initialization
-        initialize();
-    }
+    public WorkArea() { initialize(); }
 
     public void initialize(){
         setLayout(new BorderLayout());
@@ -214,20 +211,45 @@ public class WorkArea extends JPanel{
         dragPanel.addDraggableLabel("Paint Blue", 500, 175, true);
         dragPanel.addDraggableLabel("Paint Green", 500, 225, true);
         dragPanel.addDraggableLabel("Paint Black", 500, 275, true);
+        dragPanel.addDraggableLabel("Repeat Until Wall", 475, 325, true);
+        dragPanel.addDraggableLabel("Repeat Until Red", 475, 375, true);
+        dragPanel.addDraggableLabel("Repeat Until Blue", 475, 425, true);
+        dragPanel.addDraggableLabel("Repeat Until Green", 475, 475, true);
+        dragPanel.addDraggableLabel("End Repeat", 475, 525, true);
 
         ImageIcon trashIcon = new ImageIcon("./images/trash-bin-3.png");
         trashLabel = new JLabel(trashIcon);
         trashLabel.setBounds(35, 575, 75, 75); // Set the size of the label here
         dragPanel.add(trashLabel);
-
         add(dragPanel);
     }
-
-
     public JLabel getTrashLabel(){ return trashLabel; }
 
-
     public void addFromButton(String text, int x, int y){
+        if (InstructionList.getInstructions().getSize() == 0){
+            DraggableLabel.currentInstructionList.clear();
+            DraggableLabel.currentInstructionList.add(InstructionList.getInstructions().getInstructionLinkedList()); }
+        LinkedList<Instruction> currentList = DraggableLabel.currentInstructionList.peek();
+        switch (text) {
+            case ("Step"):
+                InstructionList.getInstructions().addStep(currentList);
+                break;
+            case ("Turn"):
+                InstructionList.getInstructions().addTurn(currentList);
+                break;
+            case ("Paint Red"):
+                InstructionList.getInstructions().addPaintRed(currentList);
+                break;
+            case ("Paint Blue"):
+                InstructionList.getInstructions().addPaintBlue(currentList);
+                break;
+            case ("Paint Green"):
+                InstructionList.getInstructions().addPaintGreen(currentList);
+                break;
+            case ("Paint Black"):
+                InstructionList.getInstructions().addPaintBlack(currentList);
+                break;
+        }
 
         List<DraggableLabel> list = dragPanel.getDraggedLabels();
         for (DraggableLabel str : list)

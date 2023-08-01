@@ -35,7 +35,6 @@ public class Run extends Observable implements Observer{
             flag = true;
             recursiveLoop(instructions.getInstructionLinkedList(), "Main List", null); //Populates grid with Colors
             Boolean result = checkResult();
-            System.out.println("TEST123" + result);
             promptResult(result);
             flag = false;
         }).start();
@@ -85,32 +84,27 @@ public class Run extends Observable implements Observer{
                     case WEST -> spiderDirection = Spider.Direction.NORTH;
                     case SOUTH -> spiderDirection = Spider.Direction.WEST;
                     case NORTH -> spiderDirection = Spider.Direction.EAST;
-                    //VISUALLY UPDATE SPIDER DIRECTION
                 }
                 setChanged();
                 notifyObservers();
                 break;
             case "Paint Red":
                 setgridSpaceColor(spiderX, spiderY, Color.RED);
-                //VISUALLY UPDATE GRID SPACE COLOR
                 setChanged();
                 notifyObservers();
                 break;
             case "Paint Blue":
                 setgridSpaceColor(spiderX, spiderY, Color.BLUE);
-                //VISUALLY UPDATE GRID SPACE COLOR
                 setChanged();
                 notifyObservers();
                 break;
             case "Paint Green":
                 setgridSpaceColor(spiderX, spiderY, Color.GREEN);
-                //VISUALLY UPDATE GRID SPACE COLOR
                 setChanged();
                 notifyObservers();
                 break;
             case "Paint Black":
                 setgridSpaceColor(spiderX, spiderY, Color.BLACK);
-                //VISUALLY UPDATE GRID SPACE COLOR
                 setChanged();
                 notifyObservers();
                 break;
@@ -132,20 +126,33 @@ public class Run extends Observable implements Observer{
             Color gridColor = getGridSpaceColor(check.getX(), check.getY());
             if(gridColor != check.getColor()) return false;
         }
-        return true;
+        return checkBlackSquares();
+    }
+
+    private boolean checkBlackSquares(){
+        for(int x = 1; x <= lvl.getGridSize(); x++){
+            for(int y = 1; y <= lvl.getGridSize(); y++){
+                if(!containsDiamond(x,y) && getGridSpaceColor(x, y) != Color.BLACK) return false;
+            }
+        } return true;
+    }
+
+    private boolean containsDiamond(int x, int y){
+        for(int i = 0; i < lvl.getNumberOfDiamonds(); i++){
+            Diamond diamond = lvl.getDiamond(i);
+            if(diamond.getX() == x && diamond.getY() == y) return true;
+        } return false;
     }
 
     private void promptResult(Boolean result){
-        System.out.println("TEST12345" + result);
-
+        //System.out.println("TEST12345" + result);
+        playSound("./images/PopUp.wav");
         if(result){
-            playSound("./images/nextLevel.wav");
             JOptionPane.showMessageDialog(null,
                     "Congratulations! You completed the puzzle! \n" +
                             "Click on one of the other levels to try a different puzzle or reset the level to try again",
                     "Puzzle Result!", JOptionPane.PLAIN_MESSAGE);
         } else {
-            playSound("./images/tryAgain.wav");
             JOptionPane.showMessageDialog(null,
                     "Oh no!!! Looks like your solution wasn't right! \n" +
                             "Try again",
@@ -174,10 +181,9 @@ public class Run extends Observable implements Observer{
             default -> check = false;
         }
         if(check){
-            playSound("./images/youLose.wav"); 
+            playSound("./images/PopUp.wav");
             JOptionPane.showMessageDialog(null,
-                    "Oh no!!! You hit a wall \n" +
-                            "Try again",
+                    "<html><center>Oh no!!! You hit a wall. Restart and try again",
                     "You Hit A Wall!", JOptionPane.PLAIN_MESSAGE);
         } return check;
     }
@@ -207,7 +213,6 @@ public class Run extends Observable implements Observer{
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void update(Observable o, Object arg) {

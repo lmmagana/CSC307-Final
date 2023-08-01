@@ -16,7 +16,6 @@ public class InstructionList extends Observable{
 
     public Instruction getInstruction(int pos){ return instructions.get(pos); }
     public LinkedList<Instruction> getInstructionLinkedList(){ return instructions; }
-    public Instruction getLast(){return instructions.getLast();}
     public int getSize(){return instructions.size();}
 
     public void addTurn(){ instructions.add(new Instruction("Turn")); }
@@ -86,6 +85,17 @@ public class InstructionList extends Observable{
         }
         throw new RuntimeException("No loop to add Instruction To");
     }
+
+    public Instruction getLast(){ return instructions.getLast();}
+
+    public LinkedList<Instruction> getLastRepeat(){
+        LinkedList<Instruction> ret = InstructionList.getInstructions().getInstructionLinkedList();
+        while(ret.size() > 0 && ret.getLast().checkForLoop()){
+            ret = ret.getLast().getRepeatInstructions();
+        }
+        return ret;
+    }
+
     @Override
     public String toString() {
         String[] instructionlist = new String[_instance.getSize()];

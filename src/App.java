@@ -1,9 +1,12 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -192,59 +195,73 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                 InstructionList instructions = InstructionList.getInstructions(); //Singleton of Instructions
                 Run result = Run.getInstance(); //Singleton of Run
                 levels.addObserver(result); //Observer updates level info within execution when level changes
+
+                //TEST Level 11 W/ Nested Loops and Repeat Until Color
+//                instructions.clearInstructionList();
+//                levels.changeCurrentLevel(11);
+//                instructions.addRepeatUntilColor(Color.RED);
+//                LinkedList<Instruction> tillColor = instructions.getLast().getRepeatInstructions();
+//                instructions.addRepeatUntilWall(tillColor);
+//                LinkedList<Instruction> tillWall = tillColor.getLast().getRepeatInstructions();
+//                instructions.addPaintRed(tillWall);
+//                instructions.addStep(tillWall);
+//                instructions.addTurn(tillColor);
+                //ENDOFTEST
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
                 //System.out.println(e.getActionCommand());
+                playSound("./images/ButtonClick.wav");
                 checkF++;
                 Instruction tmp;
                 LevelHelper levels = LevelHelper.getLevels();
                 if (e.getSource().getClass().getName().equals("javax.swing.JButton")) {
                         switch(((JButton) e.getSource()).getText()){
                                 case("Directions"):
+                                        playSound("./images/PopUp.wav");
                                         JOptionPane.showMessageDialog(null, "Welcome to Spider World!\n" +
                                                 "Use the 'step' and 'turn' buttons to guide the spider around her room.\n" +
                                                 "A color button paints the square the spider is standing on. Can you guide the spider to paint the squares marked with diamonds?",
                                             "Directions", JOptionPane.PLAIN_MESSAGE);
                                         break;
                                 case("Step"):
-                                        InstructionList.getInstructions().addStep();
+                                        //InstructionList.getInstructions().addStep();
                                         tmp = new Instruction("Step");
                                         buttonRun.runOneInstruction(tmp, checkF);
                                         workAreaPanel.addFromButton("Step", 200, 25);
                                         workAreaPanel.repaint();
                                         break;
                                 case("Turn"):
-                                        InstructionList.getInstructions().addTurn();
+                                        //InstructionList.getInstructions().addTurn();
                                         tmp = new Instruction("Turn");
                                         buttonRun.runOneInstruction(tmp, checkF);
                                         workAreaPanel.addFromButton("Turn", 200, 75);
                                         workAreaPanel.repaint();
                                         break;
                                 case("Red"):
-                                        InstructionList.getInstructions().addPaintRed();
+                                        //InstructionList.getInstructions().addPaintRed();
                                         tmp = new Instruction("Paint Red");
                                         buttonRun.runOneInstruction(tmp, checkF);
                                         workAreaPanel.addFromButton("Paint Red", 200, 125);
                                         workAreaPanel.repaint();
                                         break;
                                 case("Blue"):
-                                        InstructionList.getInstructions().addPaintBlue();
+                                        //InstructionList.getInstructions().addPaintBlue();
                                         tmp = new Instruction("Paint Blue");
                                         buttonRun.runOneInstruction(tmp, checkF);
                                         workAreaPanel.addFromButton("Paint Blue", 200, 175);
                                         workAreaPanel.repaint();
                                         break;
                                 case("Green"):
-                                        InstructionList.getInstructions().addPaintGreen();
+                                        //InstructionList.getInstructions().addPaintGreen();
                                         tmp = new Instruction("Paint Green");
                                         buttonRun.runOneInstruction(tmp, checkF);
                                         workAreaPanel.addFromButton("Paint Green", 200, 225);
                                         workAreaPanel.repaint();
                                         break;
                                 case("Black"):
-                                        InstructionList.getInstructions().addPaintBlack();
+                                        //InstructionList.getInstructions().addPaintBlack();
                                         tmp = new Instruction("Paint Black");
                                         buttonRun.runOneInstruction(tmp, checkF);
                                         workAreaPanel.addFromButton("Paint Black", 200, 275);
@@ -257,11 +274,8 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                                         play.execute();
                                         break;
                                 case("Restart Level"):
-                                        if(Run.getInstance().flag) return;
-                                        InstructionList.getInstructions().clearInstructionList();
-                                        levels.changeCurrentLevel(levels.getCurrentLevel());
-                                        workAreaPanel.getDragPanel().clearBoard();
-                                        workAreaPanel.initialize();
+                                        //if(Run.getInstance().flag) return;
+                                        restart();
                                         break;
                                 case("1"):
                                         levels.changeCurrentLevel(1);
@@ -313,9 +327,28 @@ public class App extends JFrame implements ActionListener, ChangeListener {
                         System.out.println("Slider was moved."); }
         }
 
+        private void restart(){
+                LevelHelper levels = LevelHelper.getLevels();
+                InstructionList.getInstructions().clearInstructionList();
+                levels.changeCurrentLevel(levels.getCurrentLevel());
+                workAreaPanel.getDragPanel().clearBoard();
+                workAreaPanel.initialize();
+        }
+
         @Override
         public void stateChanged(ChangeEvent e) {
-                System.out.println("Slider Value: " + ((JSlider) e.getSource()).getValue());
                 LevelHelper.getLevels().changeRunSpeed(((JSlider) e.getSource()).getValue());
+        }
+
+        private void playSound(String soundFileName) {
+                try {
+                        File audioFile = new File(soundFileName);
+                        AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+                        Clip clip = AudioSystem.getClip();
+                        clip.open(audioStream);
+                        clip.start();
+                } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+                        e.printStackTrace();
+                }
         }
 }
